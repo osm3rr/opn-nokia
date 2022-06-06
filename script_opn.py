@@ -190,6 +190,8 @@ for xlsx_file in range( len( xlsx_files_list ) ):
 
 #************************************************
 # normaliza el nombre de los sitios por archivo 
+#************************************************
+
 
 def norm_name(site:str) -> str:
     """normaliza los nombres de los sitios, 
@@ -225,7 +227,7 @@ lte_filter = 'LNBTS name'
 wbts_filter = 'WBTS name'
 wcdma_filter = 'WBTS name'
 
- 
+# Normalization of site names 
 df_faults_lte_total[ faults_lte_filter ] = df_faults_lte_total[
     faults_lte_filter ].apply( norm_name );
 
@@ -325,7 +327,7 @@ lte_sites = list( df_lte_unique[lte_filter].unique() )
 wbts_sites = list( df_wbts_unique[wbts_filter].unique() )
 wcdma_sites = list( df_wcdma_unique[wcdma_filter].unique() )
 
-# Dictionary FAULTS LTE
+# LTE FAULTS Dictionary 
 print("LTE FAULTS filter :")
 d_f_lte = {}
 for item in fault_lte_sites:
@@ -334,7 +336,7 @@ for item in fault_lte_sites:
                                   ]
     print( f'df_{item}: {d_f_lte[item].shape}' )
 
-# Dictionary GSM
+# GSM Dictionary 
 print("GSM filter:")
 d_gsm = {}
 for item in gsm_sites:
@@ -343,7 +345,7 @@ for item in gsm_sites:
                                 ]
     print( f'df_{item}: {d_gsm[item].shape}' )
     
-# Dictionary LTE
+# LTE Dictionary 
 print("LTE filter:")
 d_lte = {}
 for item in lte_sites:
