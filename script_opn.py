@@ -502,48 +502,48 @@ wcdma_sites = list( df_wcdma_unique[wcdma_filter].unique() )
 
 # LTE FAULTS Dictionary 
 print("LTE FAULTS filter :")
-d_f_lte = {}
+dic_lte_faults = {}
 for item in fault_lte_sites:
-    d_f_lte[item] = df_faults_lte_unique[ 
+    dic_lte_faults[item] = df_faults_lte_unique[ 
                       df_faults_lte_unique[ faults_lte_filter ] ==  item 
                                   ]
-    print( f'df_{item}: {d_f_lte[item].shape}' )
+    print( f'{item}: {dic_lte_faults[item].shape}' )
 
 # GSM Dictionary 
 print("GSM filter:")
-d_gsm = {}
+dic_gsm = {}
 for item in gsm_sites:
-    d_gsm[item] = df_gsm_unique[ 
+    dic_gsm[item] = df_gsm_unique[ 
                       df_gsm_unique[ gsm_filter ] ==  item 
                                 ]
-    print( f'df_{item}: {d_gsm[item].shape}' )
+    print( f'{item}: {dic_gsm[item].shape}' )
     
 # LTE Dictionary 
 print("LTE filter:")
-d_lte = {}
+dic_lte = {}
 for item in lte_sites:
-    d_lte[item] = df_lte_unique[ 
+    dic_lte[item] = df_lte_unique[ 
                       df_lte_unique[ lte_filter ] ==  item 
                                 ]
-    print( f'df_{item}: {d_lte[item].shape}' )
+    print( f'{item}: {dic_lte[item].shape}' )
     
 # WBTS Dictionary 
 print("WBTS filter:")
-d_wbts = {}
+dic_wbts = {}
 for item in wbts_sites:
-    d_wbts[item] = df_wbts_unique[ 
+    dic_wbts[item] = df_wbts_unique[ 
                       df_wbts_unique[ wbts_filter ] ==  item 
                                 ]
-    print( f'df_{item}: {d_wbts[item].shape}' )
+    print( f'{item}: {dic_wbts[item].shape}' )
     
 # WCDMA Dictionary
 print("WCDMA filter:")
-d_wcdma = {}
+dic_wcdma = {}
 for item in wcdma_sites:
-    d_wcdma[item] = df_wcdma_unique[ 
+    dic_wcdma[item] = df_wcdma_unique[ 
                       df_wcdma_unique[ wcdma_filter ] ==  item 
                                 ]
-    print( f'df_{item}: {d_wcdma[item].shape}' )
+    print( f'{item}: {dic_wcdma[item].shape}' )
     
 # Exporting files filtered by site
 print("\n")
@@ -555,8 +555,8 @@ output_folder = 'output'
 
 # Exporting LTE FAULTS files
 print("Exporting LTE FAULTS files ... ")
-for key, value in d_f_lte.items():
-    file_path = Path( f'{output_folder}/fallas_lte_{key}.csv' )
+for key, value in dic_lte_faults.items():
+    file_path = Path( f'{output_folder}/{key}fallas_lte_Alertas Tempranas_4G.csv' )
     file_path.parent.mkdir( parents=True, exist_ok=True )
     #print(f'{key}: {value.shape}')
     value.to_csv(file_path)
@@ -565,8 +565,8 @@ print("Exporting LTE FAULTS files OK!")
 
 # Exporting GSM files
 print("Exporting GSM files ... ")
-for key, value in d_gsm.items():
-    file_path = Path( f'{output_folder}/gsm_{key}.csv' )
+for key, value in dic_gsm.items():
+    file_path = Path( f'{output_folder}/{key}_Alertas Tempranas_2G.csv' )
     file_path.parent.mkdir( parents=True, exist_ok=True )
     #print(f'{key}: {value.shape}')
     value.to_csv(file_path)
@@ -575,8 +575,8 @@ print("Exporting GSM files OK!")
 
 # Exporting LTE files
 print("Exporting LTE files... ")
-for key, value in d_lte.items():
-    file_path = Path( f'{output_folder}/lte_{key}.csv' )
+for key, value in dic_lte.items():
+    file_path = Path( f'{output_folder}{key}_lte_Alertas Tempranas_4G.csv' )
     file_path.parent.mkdir( parents=True, exist_ok=True )
     #print(f'{key}: {value.shape}')
     value.to_csv(file_path)
@@ -585,8 +585,8 @@ print("Exporting LTE files OK")
 
 # Exporting WBTS files
 print("Exporting WBTS files... ")
-for key, value in d_wbts.items():
-    file_path = Path( f'{output_folder}/wbts_{key}.csv' )
+for key, value in dic_wbts.items():
+    file_path = Path( f'{output_folder}/{key}_wbts_Alertas Tempranas_3G.csv' )
     file_path.parent.mkdir( parents=True, exist_ok=True )
     #print(f'{key}: {value.shape}')
     value.to_csv(file_path)
@@ -595,8 +595,8 @@ print("Exporting WBTS files OK!")
 
 # Exporting WCDMA files
 print("Exporting WCDMA files... ")
-for key, value in d_wcdma.items():
-    file_path = Path( f'{output_folder}/wcdma_{key}.csv' )
+for key, value in dic_wcdma.items():
+    file_path = Path( f'{output_folder}/{key}_wcdma_Alertas Tempranas_3G.csv' )
     file_path.parent.mkdir( parents=True, exist_ok=True )
     #print(f'{key}: {value.shape}')
     value.to_csv(file_path)
