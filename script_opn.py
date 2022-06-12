@@ -556,7 +556,7 @@ output_folder = 'output'
 # Exporting LTE FAULTS files
 print("Exporting LTE FAULTS files ... ")
 for key, value in dic_lte_faults.items():
-    file_path = Path( f'{output_folder}/{key}fallas_lte_Alertas Tempranas_4G.csv' )
+    file_path = Path( f'{output_folder}/{key}_fallas_lte_Alertas Tempranas_4G.csv' )
     file_path.parent.mkdir( parents=True, exist_ok=True )
     #print(f'{key}: {value.shape}')
     value.to_csv(file_path)
@@ -576,7 +576,7 @@ print("Exporting GSM files OK!")
 # Exporting LTE files
 print("Exporting LTE files... ")
 for key, value in dic_lte.items():
-    file_path = Path( f'{output_folder}{key}_lte_Alertas Tempranas_4G.csv' )
+    file_path = Path( f'{output_folder}/{key}_lte_Alertas Tempranas_4G.csv' )
     file_path.parent.mkdir( parents=True, exist_ok=True )
     #print(f'{key}: {value.shape}')
     value.to_csv(file_path)
