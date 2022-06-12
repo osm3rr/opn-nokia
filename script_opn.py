@@ -333,8 +333,6 @@ print('\n')
 print("*****************************************************************")
 print( "check the attributes for early warning reporting 3G (WBTS, WCDMA)..." )
 print("*****************************************************************")
-print('\n')
-
 
 print( "***************************************************" )
 print( "3G parameter correspondence (WBTS, WCDMA): ok!!! " )
@@ -372,8 +370,6 @@ print('\n')
 #************************************************
 # normalize the name of the sites per file
 #************************************************
-
-
 def norm_name(site:str) -> str:
     """normaliza los nombres de los sitios, 
     colocando los nombres en minúscula y sustituyendo los caracteres
@@ -399,7 +395,6 @@ print("\n")
 print("******************************************")
 print( "Normalization of site names..." )
 print("******************************************")
-
 
 # Attributes to filter by technology
 faults_lte_filter = 'LNBTS name'
@@ -488,13 +483,10 @@ df_wcdma_unique = df_wcdma_total.drop_duplicates(
 
 print( f'Shape after remove duplicates WCDMA: {df_wcdma_unique.shape}' )
 
-
-
 # *************************************
 # Filtrado de los archivos por sitios únicos
 # Diccionario por clave: nombre del df y por valor el df
 # correspondiente
-
 
 print("\n")
 print("******************************************")
@@ -590,7 +582,6 @@ for key, value in d_lte.items():
     value.to_csv(file_path)
     
 print("Exporting LTE files OK")
-
 
 # Exporting WBTS files
 print("Exporting WBTS files... ")
