@@ -483,122 +483,164 @@ df_wcdma_unique = df_wcdma_total.drop_duplicates(
 
 print( f'Shape after remove duplicates WCDMA: {df_wcdma_unique.shape}' )
 
+
+
+# ***** Save the files in specifics templates by technology************
+print("\n")
+print("******************************************")
+print( "Saving files by technology..." )
+print("******************************************")
+
+# algorithm
+# 1. define path by technology
+# 2. tune the with statement by technology
+
+print("******************************************")
+print( "Saving data LTE FAULTS 4G..." )
+print("******************************************")
+
+
+# saving 4G files
+path_4g_lte_faults = 'output/Alertas Tempranas_4G.xlsx'
+
+with pd.ExcelWriter( path_4g_lte_faults,
+                    mode='a', 
+                    engine='openpyxl', 
+                    if_sheet_exists='overlay' ) as writer:
+    
+    # vacía el df específico en una hoja existente
+    df_faults_lte_unique.to_excel( writer, 
+                  sheet_name='Data2', 
+                  startrow=1, 
+                  index= False,
+                  header=None
+                  )
+
+print("******************************************")
+print( "Saving data LTE FAULTS 4G ok!!!" )
+print("******************************************")
+
+
+
+
+
+
 # *************************************
 # Filtrado de los archivos por sitios únicos
 # Diccionario por clave: nombre del df y por valor el df
 # correspondiente
 
-print("\n")
-print("******************************************")
-print( "Filter by site..." )
-print("******************************************")
+# print("\n")
+# print("******************************************")
+# print( "Filter by site..." )
+# print("******************************************")
 
-# Unique sites per attribute per file
-fault_lte_sites = list(df_faults_lte_unique[faults_lte_filter].unique())
-gsm_sites = list( df_gsm_unique[gsm_filter].unique() )
-lte_sites = list( df_lte_unique[lte_filter].unique() )
-wbts_sites = list( df_wbts_unique[wbts_filter].unique() )
-wcdma_sites = list( df_wcdma_unique[wcdma_filter].unique() )
+# # Unique sites per attribute per file
+# fault_lte_sites = list(df_faults_lte_unique[faults_lte_filter].unique())
+# gsm_sites = list( df_gsm_unique[gsm_filter].unique() )
+# lte_sites = list( df_lte_unique[lte_filter].unique() )
+# wbts_sites = list( df_wbts_unique[wbts_filter].unique() )
+# wcdma_sites = list( df_wcdma_unique[wcdma_filter].unique() )
 
-# LTE FAULTS Dictionary 
-print("LTE FAULTS filter :")
-dic_lte_faults = {}
-for item in fault_lte_sites:
-    dic_lte_faults[item] = df_faults_lte_unique[ 
-                      df_faults_lte_unique[ faults_lte_filter ] ==  item 
-                                  ]
-    print( f'{item}: {dic_lte_faults[item].shape}' )
+# # LTE FAULTS Dictionary 
+# print("LTE FAULTS filter :")
+# dic_lte_faults = {}
+# for item in fault_lte_sites:
+#     dic_lte_faults[item] = df_faults_lte_unique[ 
+#                       df_faults_lte_unique[ faults_lte_filter ] ==  item 
+#                                   ]
+#     print( f'{item}: {dic_lte_faults[item].shape}' )
 
-# GSM Dictionary 
-print("GSM filter:")
-dic_gsm = {}
-for item in gsm_sites:
-    dic_gsm[item] = df_gsm_unique[ 
-                      df_gsm_unique[ gsm_filter ] ==  item 
-                                ]
-    print( f'{item}: {dic_gsm[item].shape}' )
+# # GSM Dictionary 
+# print("GSM filter:")
+# dic_gsm = {}
+# for item in gsm_sites:
+#     dic_gsm[item] = df_gsm_unique[ 
+#                       df_gsm_unique[ gsm_filter ] ==  item 
+#                                 ]
+#     print( f'{item}: {dic_gsm[item].shape}' )
     
-# LTE Dictionary 
-print("LTE filter:")
-dic_lte = {}
-for item in lte_sites:
-    dic_lte[item] = df_lte_unique[ 
-                      df_lte_unique[ lte_filter ] ==  item 
-                                ]
-    print( f'{item}: {dic_lte[item].shape}' )
+# # LTE Dictionary 
+# print("LTE filter:")
+# dic_lte = {}
+# for item in lte_sites:
+#     dic_lte[item] = df_lte_unique[ 
+#                       df_lte_unique[ lte_filter ] ==  item 
+#                                 ]
+#     print( f'{item}: {dic_lte[item].shape}' )
     
-# WBTS Dictionary 
-print("WBTS filter:")
-dic_wbts = {}
-for item in wbts_sites:
-    dic_wbts[item] = df_wbts_unique[ 
-                      df_wbts_unique[ wbts_filter ] ==  item 
-                                ]
-    print( f'{item}: {dic_wbts[item].shape}' )
+# # WBTS Dictionary 
+# print("WBTS filter:")
+# dic_wbts = {}
+# for item in wbts_sites:
+#     dic_wbts[item] = df_wbts_unique[ 
+#                       df_wbts_unique[ wbts_filter ] ==  item 
+#                                 ]
+#     print( f'{item}: {dic_wbts[item].shape}' )
     
-# WCDMA Dictionary
-print("WCDMA filter:")
-dic_wcdma = {}
-for item in wcdma_sites:
-    dic_wcdma[item] = df_wcdma_unique[ 
-                      df_wcdma_unique[ wcdma_filter ] ==  item 
-                                ]
-    print( f'{item}: {dic_wcdma[item].shape}' )
+# # WCDMA Dictionary
+# print("WCDMA filter:")
+# dic_wcdma = {}
+# for item in wcdma_sites:
+#     dic_wcdma[item] = df_wcdma_unique[ 
+#                       df_wcdma_unique[ wcdma_filter ] ==  item 
+#                                 ]
+#     print( f'{item}: {dic_wcdma[item].shape}' )
     
-# Exporting files filtered by site
-print("\n")
-print("******************************************")
-print( "Exporting files filtered by site..." )
-print("******************************************")
+# # Exporting files filtered by site
+# print("\n")
+# print("******************************************")
+# print( "Exporting files filtered by site..." )
+# print("******************************************")
 
-output_folder = 'output'
+# output_folder = 'output'
 
-# Exporting LTE FAULTS files
-print("Exporting LTE FAULTS files ... ")
-for key, value in dic_lte_faults.items():
-    file_path = Path( f'{output_folder}/{key}_fallas_lte_Alertas Tempranas_4G.csv' )
-    file_path.parent.mkdir( parents=True, exist_ok=True )
-    #print(f'{key}: {value.shape}')
-    value.to_csv(file_path)
+# # Exporting LTE FAULTS files
+# print("Exporting LTE FAULTS files ... ")
+# for key, value in dic_lte_faults.items():
+#     file_path = Path( f'{output_folder}/{key}_fallas_lte_Alertas Tempranas_4G.csv' )
+#     file_path.parent.mkdir( parents=True, exist_ok=True )
+#     #print(f'{key}: {value.shape}')
+#     value.to_csv(file_path)
     
-print("Exporting LTE FAULTS files OK!")
+# print("Exporting LTE FAULTS files OK!")
 
-# Exporting GSM files
-print("Exporting GSM files ... ")
-for key, value in dic_gsm.items():
-    file_path = Path( f'{output_folder}/{key}_Alertas Tempranas_2G.csv' )
-    file_path.parent.mkdir( parents=True, exist_ok=True )
-    #print(f'{key}: {value.shape}')
-    value.to_csv(file_path)
+# # Exporting GSM files
+# print("Exporting GSM files ... ")
+# for key, value in dic_gsm.items():
+#     file_path = Path( f'{output_folder}/{key}_Alertas Tempranas_2G.csv' )
+#     file_path.parent.mkdir( parents=True, exist_ok=True )
+#     #print(f'{key}: {value.shape}')
+#     value.to_csv(file_path)
 
-print("Exporting GSM files OK!")
+# print("Exporting GSM files OK!")
 
-# Exporting LTE files
-print("Exporting LTE files... ")
-for key, value in dic_lte.items():
-    file_path = Path( f'{output_folder}/{key}_lte_Alertas Tempranas_4G.csv' )
-    file_path.parent.mkdir( parents=True, exist_ok=True )
-    #print(f'{key}: {value.shape}')
-    value.to_csv(file_path)
+# # Exporting LTE files
+# print("Exporting LTE files... ")
+# for key, value in dic_lte.items():
+#     file_path = Path( f'{output_folder}/{key}_lte_Alertas Tempranas_4G.csv' )
+#     file_path.parent.mkdir( parents=True, exist_ok=True )
+#     #print(f'{key}: {value.shape}')
+#     value.to_csv(file_path)
     
-print("Exporting LTE files OK")
+# print("Exporting LTE files OK")
 
-# Exporting WBTS files
-print("Exporting WBTS files... ")
-for key, value in dic_wbts.items():
-    file_path = Path( f'{output_folder}/{key}_wbts_Alertas Tempranas_3G.csv' )
-    file_path.parent.mkdir( parents=True, exist_ok=True )
-    #print(f'{key}: {value.shape}')
-    value.to_csv(file_path)
+# # Exporting WBTS files
+# print("Exporting WBTS files... ")
+# for key, value in dic_wbts.items():
+#     file_path = Path( f'{output_folder}/{key}_wbts_Alertas Tempranas_3G.csv' )
+#     file_path.parent.mkdir( parents=True, exist_ok=True )
+#     #print(f'{key}: {value.shape}')
+#     value.to_csv(file_path)
 
-print("Exporting WBTS files OK!")
+# print("Exporting WBTS files OK!")
 
-# Exporting WCDMA files
-print("Exporting WCDMA files... ")
-for key, value in dic_wcdma.items():
-    file_path = Path( f'{output_folder}/{key}_wcdma_Alertas Tempranas_3G.csv' )
-    file_path.parent.mkdir( parents=True, exist_ok=True )
-    #print(f'{key}: {value.shape}')
-    value.to_csv(file_path)
+# # Exporting WCDMA files
+# print("Exporting WCDMA files... ")
+# for key, value in dic_wcdma.items():
+#     file_path = Path( f'{output_folder}/{key}_wcdma_Alertas Tempranas_3G.csv' )
+#     file_path.parent.mkdir( parents=True, exist_ok=True )
+#     #print(f'{key}: {value.shape}')
+#     value.to_csv(file_path)
     
-print("Exporting WCDMA files OK!")
+# print("Exporting WCDMA files OK!")

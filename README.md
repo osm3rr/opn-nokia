@@ -1,6 +1,10 @@
 Script for consolidation of network parameter files
 
-Junio 13, puntos cubiertos a revisar:
+Requerimientos
+python >= 3.8
+pandas >= 1.4.2
+
+Junio 13/2022, puntos cubiertos a revisar:
 
 1. Lectura de los archivos de entrada e identiicación por tecnología.
 
