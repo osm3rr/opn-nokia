@@ -491,9 +491,7 @@ print("******************************************")
 print( "Saving files by technology..." )
 print("******************************************")
 
-# algorithm
-# 1. define path by technology
-# 2. tune the with statement by technology
+# savig LTE FAULTS
 
 print("******************************************")
 print( "Saving data LTE FAULTS 4G..." )
@@ -501,29 +499,136 @@ print("******************************************")
 
 
 # saving 4G files
-path_4g_lte_faults = 'output/Alertas Tempranas_4G.xlsx'
+path_4g = 'output/Alertas Tempranas_4G.xlsx'
 
-with pd.ExcelWriter( path_4g_lte_faults,
+with pd.ExcelWriter( 
+                    path_4g,
                     mode='a', 
                     engine='openpyxl', 
                     if_sheet_exists='overlay' ) as writer:
     
     # vacía el df específico en una hoja existente
-    df_faults_lte_unique.to_excel( writer, 
-                  sheet_name='Data2', 
-                  startrow=1, 
-                  index= False,
-                  header=None
-                  )
+    # 
+    df_faults_lte_unique.to_excel( 
+                                writer, 
+                                sheet_name='Data2', 
+                                index= False,
+                                header=None,
+                                startrow=1
+                                )
 
 print("******************************************")
 print( "Saving data LTE FAULTS 4G ok!!!" )
 print("******************************************")
 
+# savig LTE FAULTS
 
+print("******************************************")
+print( "Saving data LTE 4G..." )
+print("******************************************")
 
+# saving 4G files
+path_4g = 'output/Alertas Tempranas_4G.xlsx'
 
+with pd.ExcelWriter( 
+                    path_4g,
+                    mode='a', 
+                    engine='openpyxl', 
+                    if_sheet_exists='overlay' ) as writer:
+    
+    # vacía el df específico en una hoja existente
+    # 
+    df_lte_unique.to_excel( 
+                            writer, 
+                            sheet_name='Data', 
+                            index = False,
+                            header = None,
+                            startrow=1
+                            )
 
+print("******************************************")
+print( "Saving data LTE 4G ok!!!" )
+print("******************************************")
+
+# savig 3G files
+print("******************************************")
+print( "Saving data WCDMA 3G (Data)..." )
+print("******************************************")
+
+# saving 3G files
+path_3g = 'output/Alertas Tempranas_3G.xlsx'
+
+with pd.ExcelWriter( 
+                    path_3g,
+                    mode='a', 
+                    engine='openpyxl', 
+                    if_sheet_exists='overlay' ) as writer:
+    
+    # fill with the specific df in an existing sheet
+    df_wcdma_unique.to_excel( 
+                            writer, 
+                            sheet_name='Data', 
+                            index = False,
+                            header = None,
+                            startrow=1
+                            )
+
+print("******************************************")
+print( "Saving data WCDMA 3G ok!!!" )
+print("******************************************")
+
+print("******************************************")
+print( "Saving data WBTS 3G (Data2)..." )
+print("******************************************")
+
+# saving 3G files
+path_3g = 'output/Alertas Tempranas_3G.xlsx'
+
+with pd.ExcelWriter( 
+                    path_3g,
+                    mode='a', 
+                    engine='openpyxl', 
+                    if_sheet_exists='overlay' ) as writer:
+    
+    # fill with the specific df in an existing sheet
+    df_wbts_unique.to_excel( 
+                            writer, 
+                            sheet_name='Data2', 
+                            index = False,
+                            header = None,
+                            startrow=1
+                            )
+
+print("******************************************")
+print( "Saving data WBTS 3G ok!!!" )
+print("******************************************")
+
+# saving 2G files
+print("******************************************")
+print( "Saving data GSM 2G (Data)..." )
+print("******************************************")
+
+# saving 2G files
+path_2g = 'output/Alertas Tempranas_2G.xlsx'
+
+with pd.ExcelWriter( 
+                    path_2g,
+                    mode='a', 
+                    engine='openpyxl', 
+                    if_sheet_exists='overlay' ) as writer:
+    
+    # fill with the specific df in an existing sheet
+    df_gsm_unique.to_excel( 
+                            writer, 
+                            sheet_name='Data', 
+                            index = False,
+                            header = None,
+                            startrow=1
+                            )
+
+print("******************************************")
+print( "Saving data GSM 2G ok!!!" )
+print("******************************************")
 
 # *************************************
 # Filtrado de los archivos por sitios únicos
