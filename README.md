@@ -4,7 +4,7 @@ Requerimientos
 python >= 3.8
 pandas >= 1.4.2
 
-Junio 13/2022, puntos cubiertos a revisar:
+Junio 20/2022, puntos cubiertos a revisar:
 
 1. Lectura de los archivos de entrada e identiicación por tecnología.
 
@@ -16,4 +16,4 @@ Junio 13/2022, puntos cubiertos a revisar:
  
  3. Remover los valores duplicados, según la llave que aplique por tecnología.
 
- 4. Obtener en archivos, separados según sítios únicos, por tecnología.
+ 4. Consolida los datos leidos en archivos excel, que fungen de plantillas por tecnología.

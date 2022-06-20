@@ -499,7 +499,7 @@ print("******************************************")
 
 
 # saving 4G files
-path_4g = 'output/Alertas Tempranas_4G.xlsx'
+path_4g = 'plantilla/Alertas Tempranas_4G.xlsx'
 
 with pd.ExcelWriter( 
                     path_4g,
@@ -528,7 +528,7 @@ print( "Saving data LTE 4G..." )
 print("******************************************")
 
 # saving 4G files
-path_4g = 'output/Alertas Tempranas_4G.xlsx'
+path_4g = 'plantilla/Alertas Tempranas_4G.xlsx'
 
 with pd.ExcelWriter( 
                     path_4g,
@@ -556,7 +556,7 @@ print( "Saving data WCDMA 3G (Data)..." )
 print("******************************************")
 
 # saving 3G files
-path_3g = 'output/Alertas Tempranas_3G.xlsx'
+path_3g = 'plantilla/Alertas Tempranas_3G.xlsx'
 
 with pd.ExcelWriter( 
                     path_3g,
@@ -582,7 +582,7 @@ print( "Saving data WBTS 3G (Data2)..." )
 print("******************************************")
 
 # saving 3G files
-path_3g = 'output/Alertas Tempranas_3G.xlsx'
+path_3g = 'plantilla/Alertas Tempranas_3G.xlsx'
 
 with pd.ExcelWriter( 
                     path_3g,
@@ -609,7 +609,7 @@ print( "Saving data GSM 2G (Data)..." )
 print("******************************************")
 
 # saving 2G files
-path_2g = 'output/Alertas Tempranas_2G.xlsx'
+path_2g = 'plantilla/Alertas Tempranas_2G.xlsx'
 
 with pd.ExcelWriter( 
                     path_2g,
