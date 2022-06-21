@@ -507,14 +507,17 @@ with pd.ExcelWriter(
                     engine='openpyxl', 
                     if_sheet_exists='overlay' ) as writer:
     
-    # vacía el df específico en una hoja existente
-    # 
+    # reading the dimensions of the existing file
+    reader_faults_lte = pd.read_excel( path_4g, sheet_name='Data2' )
+    start_row_faults_lte = len( reader_faults_lte ) + 1
+    
+    # fill the specific df in an existing sheet
     df_faults_lte_unique.to_excel( 
                                 writer, 
-                                sheet_name='Data2', 
-                                index= False,
-                                header=None,
-                                startrow=1
+                                sheet_name = 'Data2', 
+                                index = False,
+                                header = None,
+                                startrow = start_row_faults_lte
                                 )
 
 print("******************************************")
@@ -522,7 +525,6 @@ print( "Saving data LTE FAULTS 4G ok!!!" )
 print("******************************************")
 
 # savig LTE FAULTS
-
 print("******************************************")
 print( "Saving data LTE 4G..." )
 print("******************************************")
@@ -536,14 +538,17 @@ with pd.ExcelWriter(
                     engine='openpyxl', 
                     if_sheet_exists='overlay' ) as writer:
     
-    # vacía el df específico en una hoja existente
-    # 
+    # reading the dimensions of the existing file
+    reader_lte = pd.read_excel( path_4g, sheet_name='Data' )
+    start_row_lte = len( reader_lte ) + 1
+    
+    # fill the specific df in an existing sheet
     df_lte_unique.to_excel( 
                             writer, 
                             sheet_name='Data', 
                             index = False,
                             header = None,
-                            startrow=1
+                            startrow = start_row_lte
                             )
 
 print("******************************************")
@@ -564,13 +569,17 @@ with pd.ExcelWriter(
                     engine='openpyxl', 
                     if_sheet_exists='overlay' ) as writer:
     
+    # reading the dimensions of the existing file
+    reader_wcdma = pd.read_excel( path_3g, sheet_name='Data' )
+    start_row_wcdma = len( reader_wcdma ) + 1
+    
     # fill with the specific df in an existing sheet
     df_wcdma_unique.to_excel( 
                             writer, 
                             sheet_name='Data', 
                             index = False,
                             header = None,
-                            startrow=1
+                            startrow = start_row_wcdma
                             )
 
 print("******************************************")
@@ -590,13 +599,17 @@ with pd.ExcelWriter(
                     engine='openpyxl', 
                     if_sheet_exists='overlay' ) as writer:
     
+    # reading the dimensions of the existing file
+    reader_wbts = pd.read_excel( path_3g, sheet_name='Data2' )
+    start_row_wbts = len( reader_wbts ) + 1
+    
     # fill with the specific df in an existing sheet
     df_wbts_unique.to_excel( 
                             writer, 
                             sheet_name='Data2', 
                             index = False,
                             header = None,
-                            startrow=1
+                            startrow = start_row_wbts
                             )
 
 print("******************************************")
@@ -617,13 +630,17 @@ with pd.ExcelWriter(
                     engine='openpyxl', 
                     if_sheet_exists='overlay' ) as writer:
     
+    # reading the dimensions of the existing file
+    reader_gsm = pd.read_excel( path_2g, sheet_name='Data' )
+    start_row_gsm = len( reader_gsm ) + 1
+
     # fill with the specific df in an existing sheet
     df_gsm_unique.to_excel( 
                             writer, 
                             sheet_name='Data', 
                             index = False,
                             header = None,
-                            startrow=1
+                            startrow = start_row_gsm
                             )
 
 print("******************************************")
