@@ -28,6 +28,7 @@ wbts_monitoring_count = 0
 wcdma_monitoring_count = 0
 
 # identifying files by technology
+print('\n')
 print("******************************************")
 print( "Identifying files by technology ..." )
 print("******************************************")
@@ -194,6 +195,7 @@ for xlsx_file in range( len( xlsx_files_list ) ):
 #**************************************************
 
 # check the attributes for early warning reporting 4G
+print('\n')
 print("******************************************")
 print( "check the attributes for early warning reporting 4G (FAULTS LTE)..." )
 print("******************************************")
@@ -229,12 +231,14 @@ df_faults_lte_total = df_faults_lte_total.rename( columns =
                                                     }
                                                 )
 
+print('\n')
 print( "***************************************************" )
 print( "4G parameter correspondence (FAULTS LTE): ok!!! " )
 print("****************************************************")
-print('\n')
+
 
 # **fix attribute names read in lte**
+print('\n')
 print("*****************************************************************")
 print( "check the attributes for early warning reporting 4G (LTE)..." )
 print("*****************************************************************")
@@ -324,21 +328,23 @@ else:
 # the list of column names is updated
 attribte_list_lte = df_lte_total.columns.to_list()
 
-print( "*******************************" )
+print( "*****************************************" )
 print( "4G parameter correspondence (LTE): ok!!! " )
-print("******************************************")
-print('\n')
+print("*******************************************")
+
 
 # **fix attribute names read in WBTS and WCDMA**
+print('\n')
 print("*****************************************************************")
 print( "check the attributes for early warning reporting 3G (WBTS, WCDMA)..." )
 print("*****************************************************************")
 
+print('\n')
 print( "***************************************************" )
 print( "3G parameter correspondence (WBTS, WCDMA): ok!!! " )
 print("****************************************************")
-print('\n')
 
+print('\n')
 print("*****************************************************************")
 print( "check the attributes for early warning reporting 2G (GSM)..." )
 print("*****************************************************************")
@@ -362,39 +368,39 @@ if "Zlinea" not in attribte_list_gsm:
 else:
     pass
 
+print('\n')
 print( "***************************************************" )
 print( "2G parameter correspondence (GSM): ok!!! " )
 print("****************************************************")
-print('\n')
 
 #************************************************
 # normalize the name of the sites per file
 #************************************************
-def norm_name(site:str) -> str:
-    """normaliza los nombres de los sitios, 
-    colocando los nombres en minúscula y sustituyendo los caracteres
-    '.', ':', ' ' y '-' por '_'
+# def norm_name(site:str) -> str:
+#     """normaliza los nombres de los sitios, 
+#     colocando los nombres en minúscula y sustituyendo los caracteres
+#     '.', ':', ' ' y '-' por '_'
 
-    Args:
-        site (str): nombre del sitio original
+#     Args:
+#         site (str): nombre del sitio original
 
-    Returns:
-        site (str): nombre del sitio normalizado    
-    """
+#     Returns:
+#         site (str): nombre del sitio normalizado    
+#     """
     
-    site = site.lower()
-    signs = [' ', '.', ':', '-']
-    for c in range( len( site ) ):
-        if site[c] in signs:
-            site = site.replace(site[c] , '_')
+#     site = site.lower()
+#     signs = [' ', '.', ':', '-']
+#     for c in range( len( site ) ):
+#         if site[c] in signs:
+#             site = site.replace(site[c] , '_')
         
-    return site
+#     return site
 
-# Normalization of site names
-print("\n")
-print("******************************************")
-print( "Normalization of site names..." )
-print("******************************************")
+# # Normalization of site names
+# print("\n")
+# print("******************************************")
+# print( "Normalization of site names..." )
+# print("******************************************")
 
 # Attributes to filter by technology
 faults_lte_filter = 'LNBTS name'
@@ -403,23 +409,23 @@ lte_filter = 'LNBTS name'
 wbts_filter = 'WBTS name'
 wcdma_filter = 'WBTS name'
 
-# Normalization of site names 
-df_faults_lte_total[ faults_lte_filter ] = df_faults_lte_total[
-    faults_lte_filter ].apply( norm_name );
+# # Normalization of site names 
+# df_faults_lte_total[ faults_lte_filter ] = df_faults_lte_total[
+#     faults_lte_filter ].apply( norm_name );
 
-df_gsm_total[ gsm_filter ] = df_gsm_total[ 
-                                            gsm_filter ].apply( norm_name );
+# df_gsm_total[ gsm_filter ] = df_gsm_total[ 
+#                                             gsm_filter ].apply( norm_name );
 
-df_lte_total[ lte_filter ] = df_lte_total[ 
-                                            lte_filter ].apply( norm_name );
+# df_lte_total[ lte_filter ] = df_lte_total[ 
+#                                             lte_filter ].apply( norm_name );
 
-df_wbts_total[ wbts_filter ] = df_wbts_total[
-    wbts_filter ].apply( norm_name );
+# df_wbts_total[ wbts_filter ] = df_wbts_total[
+#     wbts_filter ].apply( norm_name );
 
-df_wcdma_total[ wcdma_filter ] = df_wcdma_total[
-    wcdma_filter ].apply( norm_name );
+# df_wcdma_total[ wcdma_filter ] = df_wcdma_total[
+#     wcdma_filter ].apply( norm_name );
 
-print( "Normalization of site names OK!" )
+# print( "Normalization of site names OK!" )
 
 #************************************************
 # Remove duplicate values
@@ -484,6 +490,130 @@ df_wcdma_unique = df_wcdma_total.drop_duplicates(
 print( f'Shape after remove duplicates WCDMA: {df_wcdma_unique.shape}' )
 
 
+# ************************************************
+# File filtering by unique sites
+# ************************************************
+
+print("\n")
+print("******************************************")
+print( "Filter by site..." )
+print("******************************************")
+
+print("\n")
+print("******************************************")
+print( "reading the filters file by site..." )
+print("******************************************")
+
+# file path for filter by unique sites
+filter_file = 'input/listado_de_sitios_at.txt'
+
+# reading file
+reader = open( filter_file, 'r' )
+data = reader.read()
+
+# incorporar la lógica para que detecte el caso en el
+# que se coloca una coma al final del último sitio
+sites_to_search = data.replace( '\n', '' ).split( "," )
+reader.close()
+
+# sites by filter
+print("\n")
+print("******************************************")
+print( "reading the filters file by site ok!!!" )
+print("******************************************")
+
+# site search by technology
+print("\n")
+print("******************************************")
+print( "site search by technology..." )
+print("******************************************")
+
+# Unique sites per attribute per file
+lte_failures_sites = list(df_faults_lte_unique[faults_lte_filter].unique())
+gsm_sites = list( df_gsm_unique[gsm_filter].unique() )
+lte_sites = list( df_lte_unique[lte_filter].unique() )
+wbts_sites = list( df_wbts_unique[wbts_filter].unique() )
+wcdma_sites = list( df_wcdma_unique[wcdma_filter].unique() )
+
+print("\n")
+print("******************************************")
+print( "search for sites in LTE FAILURES..." )
+print("******************************************")
+
+found_sites_lte_failures = []
+#total_items_searched = len( sites_to_search )
+#found_items_counter_lte_failures = 0
+for item in sites_to_search:
+    if item in lte_failures_sites:
+        #found_items_counter_lte_failures += 1
+        found_sites_lte_failures.append( item )
+
+print( f'Found sites in LTE FAILURES: {found_sites_lte_failures}' )
+
+print("\n")
+print("******************************************")
+print( "search for sites in GSM..." )
+print("******************************************")
+
+found_sites_gsm = []
+#total_items_searched = len( sites_to_search )
+#found_items_counter = 0
+for item in sites_to_search:
+    if item in gsm_sites:
+        #found_items_counter += 1
+        found_sites_gsm.append( item )
+
+print( f'Found sites in GSM: {found_sites_gsm}' )
+
+print("\n")
+print("******************************************")
+print( "search for sites in LTE..." )
+print("******************************************")
+
+found_sites_lte = []
+#total_items_searched = len( sites_to_search )
+#found_items_counter = 0
+for item in sites_to_search:
+    if item in lte_sites:
+        #found_items_counter += 1
+        found_sites_lte.append( item )
+
+print( f'Found sites in LTE: {found_sites_lte}' )
+
+print("\n")
+print("******************************************")
+print( "search for sites in WBTS..." )
+print("******************************************")
+
+found_sites_wbts = []
+#total_items_searched = len( sites_to_search )
+#found_items_counter = 0
+for item in sites_to_search:
+    if item in wbts_sites:
+        #found_items_counter += 1
+        found_sites_wbts.append( item )
+
+print( f'Found sites in WBTS: {found_sites_wbts}' )
+
+print("\n")
+print("******************************************")
+print( "search for sites in WCDMA..." )
+print("******************************************")
+
+found_sites_wcdma = []
+#total_items_searched = len( sites_to_search )
+#found_items_counter = 0
+for item in sites_to_search:
+    if item in wcdma_sites:
+        #found_items_counter += 1
+        found_sites_wcdma.append( item )
+
+print( f'Found sites in WCDMA: {found_sites_wcdma}' )
+
+print("\n")
+print("******************************************")
+print( "site search by technology OK!!!" )
+print("******************************************")
 
 # ***** Save the files in specifics templates by technology************
 print("\n")
@@ -492,7 +622,7 @@ print( "Saving files by technology..." )
 print("******************************************")
 
 # savig LTE FAULTS
-
+print("\n")
 print("******************************************")
 print( "Saving data LTE FAULTS 4G..." )
 print("******************************************")
@@ -519,12 +649,13 @@ with pd.ExcelWriter(
                                 header = None,
                                 startrow = start_row_faults_lte
                                 )
-
+print("\n")
 print("******************************************")
 print( "Saving data LTE FAULTS 4G ok!!!" )
 print("******************************************")
 
 # savig LTE FAULTS
+print("\n")
 print("******************************************")
 print( "Saving data LTE 4G..." )
 print("******************************************")
@@ -550,12 +681,13 @@ with pd.ExcelWriter(
                             header = None,
                             startrow = start_row_lte
                             )
-
+print("\n")
 print("******************************************")
 print( "Saving data LTE 4G ok!!!" )
 print("******************************************")
 
 # savig 3G files
+print("\n")
 print("******************************************")
 print( "Saving data WCDMA 3G (Data)..." )
 print("******************************************")
@@ -581,11 +713,12 @@ with pd.ExcelWriter(
                             header = None,
                             startrow = start_row_wcdma
                             )
-
+print("\n")
 print("******************************************")
 print( "Saving data WCDMA 3G ok!!!" )
 print("******************************************")
 
+print("\n")
 print("******************************************")
 print( "Saving data WBTS 3G (Data2)..." )
 print("******************************************")
@@ -611,12 +744,13 @@ with pd.ExcelWriter(
                             header = None,
                             startrow = start_row_wbts
                             )
-
+print("\n")
 print("******************************************")
 print( "Saving data WBTS 3G ok!!!" )
 print("******************************************")
 
 # saving 2G files
+print("\n")
 print("******************************************")
 print( "Saving data GSM 2G (Data)..." )
 print("******************************************")
@@ -642,27 +776,16 @@ with pd.ExcelWriter(
                             header = None,
                             startrow = start_row_gsm
                             )
-
+print("\n")
 print("******************************************")
 print( "Saving data GSM 2G ok!!!" )
 print("******************************************")
 
-# *************************************
-# Filtrado de los archivos por sitios únicos
+
+
+
 # Diccionario por clave: nombre del df y por valor el df
 # correspondiente
-
-# print("\n")
-# print("******************************************")
-# print( "Filter by site..." )
-# print("******************************************")
-
-# # Unique sites per attribute per file
-# fault_lte_sites = list(df_faults_lte_unique[faults_lte_filter].unique())
-# gsm_sites = list( df_gsm_unique[gsm_filter].unique() )
-# lte_sites = list( df_lte_unique[lte_filter].unique() )
-# wbts_sites = list( df_wbts_unique[wbts_filter].unique() )
-# wcdma_sites = list( df_wcdma_unique[wcdma_filter].unique() )
 
 # # LTE FAULTS Dictionary 
 # print("LTE FAULTS filter :")

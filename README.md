@@ -17,3 +17,10 @@ Junio 20/2022, puntos cubiertos a revisar:
  3. Remover los valores duplicados, según la llave que aplique por tecnología.
 
  4. Consolida los datos leidos en archivos excel, que fungen de plantillas por tecnología.
+
+ 5. Los sitios que se agreguen para filtrar en el archivo .txt deben estar uno debajo del otro, separados por comas, el último sitio no debe llevar coma al final. A continuación se muestra un ejemplo para tres sitios: 
+ 
+ site 1,
+ site 2,
+ site 3
+
