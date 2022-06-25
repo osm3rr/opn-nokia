@@ -3,6 +3,9 @@ import pandas as pd
 import numpy as np
 import glob
 from pathlib import Path
+import shutil
+import os
+
 
 
 # base path of files location
@@ -429,7 +432,7 @@ wcdma_filter = 'WBTS name'
 
 #************************************************
 # Remove duplicate values
-
+#************************************************
 print("\n")
 print("******************************************")
 print( "Removing duplicate values..." )
@@ -511,7 +514,7 @@ filter_file = 'input/listado_de_sitios_at.txt'
 reader = open( filter_file, 'r' )
 data = reader.read()
 
-# incorporar la lógica para que detecte el caso en el
+# nota: incorporar la lógica para que detecte el caso en el
 # que se coloca una coma al final del último sitio
 sites_to_search = data.replace( '\n', '' ).split( "," )
 reader.close()
@@ -615,171 +618,263 @@ print("******************************************")
 print( "site search by technology OK!!!" )
 print("******************************************")
 
+## Copiar plantilla por tecnología 
+# y guardar tantas veces, como sitios encontrados
+
 # ***** Save the files in specifics templates by technology************
 print("\n")
 print("******************************************")
 print( "Saving files by technology..." )
 print("******************************************")
 
+print("\n")
+print("******************************************")
+print( " Creating files per site 2G ..." )
+print("******************************************")
+
+# templates path
+src_path_2g = r"plantilla/Alertas Tempranas_2G.xlsx"
+
+# destination path
+dest_path = r"output/"
+
+shutil.copy( src_path_2g, dest_path )
+
+# rename the file
+for file_name in os.listdir(dest_path):
+    if "2G" in file_name:
+        for file in range( len( found_sites_gsm )):
+            
+            old_name_2g = dest_path + file_name
+            new_name_dest_2g = dest_path + found_sites_gsm[file]+'_' + file_name
+            
+            os.rename( old_name_2g, new_name_dest_2g )
+            shutil.copy( src_path_2g, dest_path )
+            
+        os.remove( old_name_2g )
+print("\n")
+print("********************************************************")
+print( "files per site 2G created successfully!!!..." )
+print("********************************************************")
+
+
+print("\n")
+print("******************************************")
+print( " Creating files per site 3G ..." )
+print("******************************************")
+
+# templates path
+src_path_3g = r"plantilla/Alertas Tempranas_3G.xlsx"
+
+# destination path
+dest_path = r"output/"
+
+shutil.copy( src_path_3g, dest_path )
+
+# rename the file
+for file_name in os.listdir(dest_path):
+    if "3G" in file_name:
+        for file in range( len( found_sites_wbts )):
+            
+            old_name_3g = dest_path + file_name
+            new_name_dest_3g = dest_path + found_sites_wbts[file]+'_' + file_name
+            
+            os.rename( old_name_3g, new_name_dest_3g )
+            shutil.copy( src_path_3g, dest_path )
+            
+        os.remove( old_name_3g )
+print("\n")
+print("********************************************************")
+print( "files per site 3G created successfully!!!..." )
+print("********************************************************")
+
 # savig LTE FAULTS
 print("\n")
 print("******************************************")
-print( "Saving data LTE FAULTS 4G..." )
+print( " Creating files per site 4G..." )
 print("******************************************")
 
+# templates path
+src_path_4g = r"plantilla/Alertas Tempranas_4G.xlsx"
 
-# saving 4G files
-path_4g = 'output/Alertas Tempranas_4G.xlsx'
+# destination path
+dest_path = r"output/"
 
-with pd.ExcelWriter( 
-                    path_4g,
-                    mode='a', 
-                    engine='openpyxl', 
-                    if_sheet_exists='overlay' ) as writer:
-    
-    # reading the dimensions of the existing file
-    reader_faults_lte = pd.read_excel( path_4g, sheet_name='Data2' )
-    start_row_faults_lte = len( reader_faults_lte ) + 1
-    
-    # fill the specific df in an existing sheet
-    df_faults_lte_unique.to_excel( 
-                                writer, 
-                                sheet_name = 'Data2', 
-                                index = False,
-                                header = None,
-                                startrow = start_row_faults_lte
-                                )
+shutil.copy( src_path_4g, dest_path )
+
+# rename the file
+for file_name in os.listdir(dest_path):
+    if "4G" in file_name:
+        for file in range( len( found_sites_lte_failures )):
+            
+            old_name_4g = dest_path + file_name
+            new_name_dest_4g = dest_path + found_sites_lte_failures[file]+'_' + file_name
+            
+            os.rename( old_name_4g, new_name_dest_4g )
+            shutil.copy( src_path_4g, dest_path )
+            
+        os.remove( old_name_4g )
 print("\n")
-print("******************************************")
-print( "Saving data LTE FAULTS 4G ok!!!" )
-print("******************************************")
+print("********************************************************")
+print( " files per site 4G created successfully!!! ..." )
+print("********************************************************")
 
-# savig LTE FAULTS
-print("\n")
-print("******************************************")
-print( "Saving data LTE 4G..." )
-print("******************************************")
 
-# saving 4G files
-path_4g = 'output/Alertas Tempranas_4G.xlsx'
 
-with pd.ExcelWriter( 
-                    path_4g,
-                    mode='a', 
-                    engine='openpyxl', 
-                    if_sheet_exists='overlay' ) as writer:
+
+
+# # saving 4G files
+# path_4g = 'output/Alertas Tempranas_4G.xlsx'
+
+# with pd.ExcelWriter( 
+#                     path_4g,
+#                     mode='a', 
+#                     engine='openpyxl', 
+#                     if_sheet_exists='overlay' ) as writer:
     
-    # reading the dimensions of the existing file
-    reader_lte = pd.read_excel( path_4g, sheet_name='Data' )
-    start_row_lte = len( reader_lte ) + 1
+#     # reading the dimensions of the existing file
+#     reader_faults_lte = pd.read_excel( path_4g, sheet_name='Data2' )
+#     start_row_faults_lte = len( reader_faults_lte ) + 1
     
-    # fill the specific df in an existing sheet
-    df_lte_unique.to_excel( 
-                            writer, 
-                            sheet_name='Data', 
-                            index = False,
-                            header = None,
-                            startrow = start_row_lte
-                            )
-print("\n")
-print("******************************************")
-print( "Saving data LTE 4G ok!!!" )
-print("******************************************")
+#     # fill the specific df in an existing sheet
+#     df_faults_lte_unique.to_excel( 
+#                                 writer, 
+#                                 sheet_name = 'Data2', 
+#                                 index = False,
+#                                 header = None,
+#                                 startrow = start_row_faults_lte
+#                                 )
+# print("\n")
+# print("******************************************")
+# print( "Saving data LTE FAULTS 4G ok!!!" )
+# print("******************************************")
 
-# savig 3G files
-print("\n")
-print("******************************************")
-print( "Saving data WCDMA 3G (Data)..." )
-print("******************************************")
+# # savig LTE FAULTS
+# print("\n")
+# print("******************************************")
+# print( "Saving data LTE 4G (Data)..." )
+# print("******************************************")
 
-# saving 3G files
-path_3g = 'output/Alertas Tempranas_3G.xlsx'
+# # saving 4G files
+# path_4g = 'output/Alertas Tempranas_4G.xlsx'
 
-with pd.ExcelWriter( 
-                    path_3g,
-                    mode='a', 
-                    engine='openpyxl', 
-                    if_sheet_exists='overlay' ) as writer:
+# with pd.ExcelWriter( 
+#                     path_4g,
+#                     mode='a', 
+#                     engine='openpyxl', 
+#                     if_sheet_exists='overlay' ) as writer:
     
-    # reading the dimensions of the existing file
-    reader_wcdma = pd.read_excel( path_3g, sheet_name='Data' )
-    start_row_wcdma = len( reader_wcdma ) + 1
+#     # reading the dimensions of the existing file
+#     reader_lte = pd.read_excel( path_4g, sheet_name='Data' )
+#     start_row_lte = len( reader_lte ) + 1
     
-    # fill with the specific df in an existing sheet
-    df_wcdma_unique.to_excel( 
-                            writer, 
-                            sheet_name='Data', 
-                            index = False,
-                            header = None,
-                            startrow = start_row_wcdma
-                            )
-print("\n")
-print("******************************************")
-print( "Saving data WCDMA 3G ok!!!" )
-print("******************************************")
+#     # fill the specific df in an existing sheet
+#     df_lte_unique.to_excel( 
+#                             writer, 
+#                             sheet_name='Data', 
+#                             index = False,
+#                             header = None,
+#                             startrow = start_row_lte
+#                             )
+# print("\n")
+# print("******************************************")
+# print( "Saving data LTE 4G ok!!!" )
+# print("******************************************")
 
-print("\n")
-print("******************************************")
-print( "Saving data WBTS 3G (Data2)..." )
-print("******************************************")
+# # savig 3G files
+# print("\n")
+# print("******************************************")
+# print( "Saving data WCDMA 3G (Data)..." )
+# print("******************************************")
 
-# saving 3G files
-path_3g = 'output/Alertas Tempranas_3G.xlsx'
+# # saving 3G files
+# path_3g = 'output/Alertas Tempranas_3G.xlsx'
 
-with pd.ExcelWriter( 
-                    path_3g,
-                    mode='a', 
-                    engine='openpyxl', 
-                    if_sheet_exists='overlay' ) as writer:
+# with pd.ExcelWriter( 
+#                     path_3g,
+#                     mode='a', 
+#                     engine='openpyxl', 
+#                     if_sheet_exists='overlay' ) as writer:
     
-    # reading the dimensions of the existing file
-    reader_wbts = pd.read_excel( path_3g, sheet_name='Data2' )
-    start_row_wbts = len( reader_wbts ) + 1
+#     # reading the dimensions of the existing file
+#     reader_wcdma = pd.read_excel( path_3g, sheet_name='Data' )
+#     start_row_wcdma = len( reader_wcdma ) + 1
     
-    # fill with the specific df in an existing sheet
-    df_wbts_unique.to_excel( 
-                            writer, 
-                            sheet_name='Data2', 
-                            index = False,
-                            header = None,
-                            startrow = start_row_wbts
-                            )
-print("\n")
-print("******************************************")
-print( "Saving data WBTS 3G ok!!!" )
-print("******************************************")
+#     # fill with the specific df in an existing sheet
+#     df_wcdma_unique.to_excel( 
+#                             writer, 
+#                             sheet_name='Data', 
+#                             index = False,
+#                             header = None,
+#                             startrow = start_row_wcdma
+#                             )
+# print("\n")
+# print("******************************************")
+# print( "Saving data WCDMA 3G ok!!!" )
+# print("******************************************")
 
-# saving 2G files
-print("\n")
-print("******************************************")
-print( "Saving data GSM 2G (Data)..." )
-print("******************************************")
+# print("\n")
+# print("******************************************")
+# print( "Saving data WBTS 3G (Data2)..." )
+# print("******************************************")
 
-# saving 2G files
-path_2g = 'output/Alertas Tempranas_2G.xlsx'
+# # saving 3G files
+# path_3g = 'output/Alertas Tempranas_3G.xlsx'
 
-with pd.ExcelWriter( 
-                    path_2g,
-                    mode='a', 
-                    engine='openpyxl', 
-                    if_sheet_exists='overlay' ) as writer:
+# with pd.ExcelWriter( 
+#                     path_3g,
+#                     mode='a', 
+#                     engine='openpyxl', 
+#                     if_sheet_exists='overlay' ) as writer:
     
-    # reading the dimensions of the existing file
-    reader_gsm = pd.read_excel( path_2g, sheet_name='Data' )
-    start_row_gsm = len( reader_gsm ) + 1
+#     # reading the dimensions of the existing file
+#     reader_wbts = pd.read_excel( path_3g, sheet_name='Data2' )
+#     start_row_wbts = len( reader_wbts ) + 1
+    
+#     # fill with the specific df in an existing sheet
+#     df_wbts_unique.to_excel( 
+#                             writer, 
+#                             sheet_name='Data2', 
+#                             index = False,
+#                             header = None,
+#                             startrow = start_row_wbts
+#                             )
+# print("\n")
+# print("******************************************")
+# print( "Saving data WBTS 3G ok!!!" )
+# print("******************************************")
 
-    # fill with the specific df in an existing sheet
-    df_gsm_unique.to_excel( 
-                            writer, 
-                            sheet_name='Data', 
-                            index = False,
-                            header = None,
-                            startrow = start_row_gsm
-                            )
-print("\n")
-print("******************************************")
-print( "Saving data GSM 2G ok!!!" )
-print("******************************************")
+# # saving 2G files
+# print("\n")
+# print("******************************************")
+# print( "Saving data GSM 2G (Data)..." )
+# print("******************************************")
+
+# # saving 2G files
+# path_2g = 'output/Alertas Tempranas_2G.xlsx'
+
+# with pd.ExcelWriter( 
+#                     path_2g,
+#                     mode='a', 
+#                     engine='openpyxl', 
+#                     if_sheet_exists='overlay' ) as writer:
+    
+#     # reading the dimensions of the existing file
+#     reader_gsm = pd.read_excel( path_2g, sheet_name='Data' )
+#     start_row_gsm = len( reader_gsm ) + 1
+
+#     # fill with the specific df in an existing sheet
+#     df_gsm_unique.to_excel( 
+#                             writer, 
+#                             sheet_name='Data', 
+#                             index = False,
+#                             header = None,
+#                             startrow = start_row_gsm
+#                             )
+# print("\n")
+# print("******************************************")
+# print( "Saving data GSM 2G ok!!!" )
+# print("******************************************")
 
 
 
