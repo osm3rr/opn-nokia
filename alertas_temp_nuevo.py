@@ -627,6 +627,21 @@ print("******************************************")
 print( "Saving files by technology..." )
 print("******************************************")
 
+# Cleaning the folder output
+print("\n")
+print("******************************************")
+print( "removing existing files..." )
+print("******************************************")
+dest_path = r"output/"
+for file in os.listdir( dest_path ):
+    existing_file = dest_path + file
+    os.remove( existing_file )
+
+print("******************************************")
+print( "existing files removed successfuly!" )
+print("******************************************")
+
+
 print("\n")
 print("******************************************")
 print( " Creating files per site 2G ..." )
