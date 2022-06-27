@@ -731,11 +731,96 @@ for file_name in os.listdir(dest_path):
         os.remove( old_name_4g )
 print("\n")
 print("********************************************************")
-print( " files per site 4G created successfully!!! ..." )
+print( "files per site 4G created successfully!!! ..." )
 print("********************************************************")
 
+#############################################################
+#**** filter the data according to the indicated sites*****
+#############################################################
 
+# Saves the filtered data in a dictionary. 
+# By key of the dictionary is the site and by value the data
 
+# LTE FAILURES Dictionary 
+print("\n")
+print("********************************************************")
+print("LTE FAULTS filter...")
+print("********************************************************")
+dic_lte_faults = {}
+for item in found_sites_lte_failures:
+    dic_lte_faults[item] = df_faults_lte_unique[ 
+                        df_faults_lte_unique[ faults_lte_filter ] ==  item 
+                                               ]
+    print( f'{item}: {dic_lte_faults[item].shape}' )
+
+print("********************************************************")
+print("LTE FAULTS filter ok!!!")
+print("********************************************************")
+
+# GSM Dictionary 
+print("\n")
+print("********************************************************")
+print("GSM filter...")
+print("********************************************************")
+dic_gsm = {}
+for item in found_sites_gsm:
+    dic_gsm[item] = df_gsm_unique[ 
+                    df_gsm_unique[ gsm_filter ] ==  item 
+                                 ]
+    print( f'{item}: {dic_gsm[item].shape}' )
+
+print("********************************************************")
+print("GSM filter ok!!!")
+print("********************************************************")
+    
+# # LTE Dictionary 
+print("\n")
+print("********************************************************")
+print("LTE filter...")
+print("********************************************************")
+dic_lte = {}
+for item in found_sites_lte:
+    dic_lte[item] = df_lte_unique[ 
+                    df_lte_unique[ lte_filter ] ==  item 
+                                 ]
+    print( f'{item}: {dic_lte[item].shape}' )
+
+print("********************************************************")
+print("LTE filter ok!!!")
+print("********************************************************")
+    
+    
+# WBTS Dictionary 
+print("\n")
+print("********************************************************")
+print("WBTS filter...")
+print("********************************************************")
+dic_wbts = {}
+for item in found_sites_wbts:
+    dic_wbts[item] = df_wbts_unique[ 
+                     df_wbts_unique[ wbts_filter ] ==  item 
+                                    ]
+    print( f'{item}: {dic_wbts[item].shape}' )
+
+print("********************************************************")
+print("WBTS filter ok!!!")
+print("********************************************************")
+    
+# WCDMA Dictionary
+print("\n")
+print("********************************************************")
+print("WCDMA filter:")
+print("********************************************************")
+dic_wcdma = {}
+for item in found_sites_wcdma:
+    dic_wcdma[item] = df_wcdma_unique[ 
+                      df_wcdma_unique[ wcdma_filter ] ==  item 
+                                    ]
+    print( f'{item}: {dic_wcdma[item].shape}' )
+
+print("********************************************************")
+print("WCDMA filter ok!!!")
+print("********************************************************")
 
 
 # # saving 4G files
@@ -892,12 +977,14 @@ print("********************************************************")
 # print("******************************************")
 
 
+#############################################################
+#**** filter the data according to the indicated sites*****
+#############################################################
 
+# Saves the filtered data in a dictionary. 
+# By key of the dictionary is the site and by value the data
 
-# Diccionario por clave: nombre del df y por valor el df
-# correspondiente
-
-# # LTE FAULTS Dictionary 
+# LTE FAILURES Dictionary 
 # print("LTE FAULTS filter :")
 # dic_lte_faults = {}
 # for item in fault_lte_sites:

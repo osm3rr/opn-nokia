@@ -23,4 +23,3 @@ Junio 20/2022, puntos cubiertos a revisar:
  site 1,
  site 2,
  site 3
-
