@@ -6,8 +6,6 @@ from pathlib import Path
 import shutil
 import os
 
-
-
 # base path of files location
 path = "/home/opm/Documentos-opm/OPN_COLOMBIA/ANALISYS/input"
 
@@ -236,7 +234,7 @@ df_faults_lte_total = df_faults_lte_total.rename( columns =
 
 print('\n')
 print( "***************************************************" )
-print( "4G parameter correspondence (FAULTS LTE): ok!!! " )
+print( "4G parameter correspondence (FAULTS LTE): done!!! " )
 print("****************************************************")
 
 
@@ -246,7 +244,7 @@ print("*****************************************************************")
 print( "check the attributes for early warning reporting 4G (LTE)..." )
 print("*****************************************************************")
 
-# control flag for tests in this notebook
+# control flag for tests in this notebodone
 rename_count_lte = 0
 
 # attributes available in lte
@@ -332,7 +330,7 @@ else:
 attribte_list_lte = df_lte_total.columns.to_list()
 
 print( "*****************************************" )
-print( "4G parameter correspondence (LTE): ok!!! " )
+print( "4G parameter correspondence (LTE): done!!! " )
 print("*******************************************")
 
 
@@ -344,7 +342,7 @@ print("*****************************************************************")
 
 print('\n')
 print( "***************************************************" )
-print( "3G parameter correspondence (WBTS, WCDMA): ok!!! " )
+print( "3G parameter correspondence (WBTS, WCDMA): done!!! " )
 print("****************************************************")
 
 print('\n')
@@ -373,7 +371,7 @@ else:
 
 print('\n')
 print( "***************************************************" )
-print( "2G parameter correspondence (GSM): ok!!! " )
+print( "2G parameter correspondence (GSM): done!!! " )
 print("****************************************************")
 
 #************************************************
@@ -428,7 +426,7 @@ wcdma_filter = 'WBTS name'
 # df_wcdma_total[ wcdma_filter ] = df_wcdma_total[
 #     wcdma_filter ].apply( norm_name );
 
-# print( "Normalization of site names OK!" )
+# print( "Normalization of site names done!" )
 
 #************************************************
 # Remove duplicate values
@@ -522,7 +520,7 @@ reader.close()
 # sites by filter
 print("\n")
 print("******************************************")
-print( "reading the filters file by site ok!!!" )
+print( "reading the filters file by site done!!!" )
 print("******************************************")
 
 # site search by technology
@@ -615,7 +613,7 @@ print( f'Found sites in WCDMA: {found_sites_wcdma}' )
 
 print("\n")
 print("******************************************")
-print( "site search by technology OK!!!" )
+print( "site search by technology done!!!" )
 print("******************************************")
 
 ## Copiar plantilla por tecnología 
@@ -667,6 +665,8 @@ for file_name in os.listdir(dest_path):
             shutil.copy( src_path_2g, dest_path )
             
         os.remove( old_name_2g )
+    else:
+        pass
 print("\n")
 print("********************************************************")
 print( "files per site 2G created successfully!!!..." )
@@ -698,6 +698,8 @@ for file_name in os.listdir(dest_path):
             shutil.copy( src_path_3g, dest_path )
             
         os.remove( old_name_3g )
+    else:
+        pass
 print("\n")
 print("********************************************************")
 print( "files per site 3G created successfully!!!..." )
@@ -723,12 +725,14 @@ for file_name in os.listdir(dest_path):
         for file in range( len( found_sites_lte_failures )):
             
             old_name_4g = dest_path + file_name
-            new_name_dest_4g = dest_path + found_sites_lte_failures[file]+'_' + file_name
+            new_name_dest_4g = dest_path + found_sites_lte_failures[file] + '_' + file_name
             
             os.rename( old_name_4g, new_name_dest_4g )
             shutil.copy( src_path_4g, dest_path )
             
         os.remove( old_name_4g )
+    else:
+        pass
 print("\n")
 print("********************************************************")
 print( "files per site 4G created successfully!!! ..." )
@@ -754,7 +758,7 @@ for item in found_sites_lte_failures:
     print( f'{item}: {dic_lte_faults[item].shape}' )
 
 print("********************************************************")
-print("LTE FAULTS filter ok!!!")
+print("LTE FAULTS filter done!!!")
 print("********************************************************")
 
 # GSM Dictionary 
@@ -770,7 +774,7 @@ for item in found_sites_gsm:
     print( f'{item}: {dic_gsm[item].shape}' )
 
 print("********************************************************")
-print("GSM filter ok!!!")
+print("GSM filter done!!!")
 print("********************************************************")
     
 # # LTE Dictionary 
@@ -786,7 +790,7 @@ for item in found_sites_lte:
     print( f'{item}: {dic_lte[item].shape}' )
 
 print("********************************************************")
-print("LTE filter ok!!!")
+print("LTE filter done!!!")
 print("********************************************************")
     
     
@@ -803,7 +807,7 @@ for item in found_sites_wbts:
     print( f'{item}: {dic_wbts[item].shape}' )
 
 print("********************************************************")
-print("WBTS filter ok!!!")
+print("WBTS filter done!!!")
 print("********************************************************")
     
 # WCDMA Dictionary
@@ -819,11 +823,94 @@ for item in found_sites_wcdma:
     print( f'{item}: {dic_wcdma[item].shape}' )
 
 print("********************************************************")
-print("WCDMA filter ok!!!")
+print("WCDMA filter done!!!")
 print("********************************************************")
 
+#############################################################
+#**** data injection in filterd files*****
+#############################################################
 
-# # saving 4G files
+print("\n")
+print("********************************************************")
+print("4G data injection...")
+print("********************************************************")
+
+########## Data injection FAULTS LTE #########
+# loop through existing files
+for file_name in os.listdir(dest_path):
+    if "4G" in file_name:
+        # file filtered path
+        path_file_4g = dest_path + file_name
+        # 
+        for site in dic_lte_faults:
+            if site in path_file_4g:
+                # data injection
+                with pd.ExcelWriter( 
+                                    path_file_4g,
+                                    mode='a', 
+                                    engine='openpyxl', 
+                                    if_sheet_exists='overlay' ) as writer:
+                    
+                    # reading the dimensions of the existing file
+                    reader_faults_lte = pd.read_excel( path_file_4g, sheet_name='Data2' )
+                    start_row_faults_lte = len( reader_faults_lte ) + 1
+                    
+                    # fill the specific df in an existing sheet
+                    dic_lte_faults[ site ].to_excel( 
+                                                writer, 
+                                                sheet_name = 'Data2', 
+                                                index = False,
+                                                header = None,
+                                                startrow = start_row_faults_lte
+                                                )
+                      
+            else:
+                pass
+                
+    else:
+        pass
+    
+########## Data injection LTE #########
+# loop through existing files
+for file_name in os.listdir(dest_path):
+    if "4G" in file_name:
+        # file filtered path
+        path_file_4g = dest_path + file_name
+        # 
+        for site in dic_lte:
+            if site in path_file_4g:
+                # data injection
+                with pd.ExcelWriter( 
+                                    path_file_4g,
+                                    mode='a', 
+                                    engine='openpyxl', 
+                                    if_sheet_exists='overlay' ) as writer:
+                    
+                    # reading the dimensions of the existing file
+                    reader_lte = pd.read_excel( path_file_4g, sheet_name='Data' )
+                    start_row_lte = len( reader_lte ) + 1
+                    
+                    # fill the specific df in an existing sheet
+                    dic_lte[ site ].to_excel( 
+                                                writer, 
+                                                sheet_name = 'Data', 
+                                                index = False,
+                                                header = None,
+                                                startrow = start_row_lte
+                                                )
+                      
+            else:
+                pass
+                
+    else:
+        pass
+
+
+print("********************************************************")
+print("4G data injection, done!")
+print("********************************************************")
+
+# Saving 4G files
 # path_4g = 'output/Alertas Tempranas_4G.xlsx'
 
 # with pd.ExcelWriter( 
@@ -846,7 +933,7 @@ print("********************************************************")
 #                                 )
 # print("\n")
 # print("******************************************")
-# print( "Saving data LTE FAULTS 4G ok!!!" )
+# print( "Saving data LTE FAULTS 4G done!!!" )
 # print("******************************************")
 
 # # savig LTE FAULTS
@@ -878,7 +965,7 @@ print("********************************************************")
 #                             )
 # print("\n")
 # print("******************************************")
-# print( "Saving data LTE 4G ok!!!" )
+# print( "Saving data LTE 4G done!!!" )
 # print("******************************************")
 
 # # savig 3G files
@@ -910,7 +997,7 @@ print("********************************************************")
 #                             )
 # print("\n")
 # print("******************************************")
-# print( "Saving data WCDMA 3G ok!!!" )
+# print( "Saving data WCDMA 3G done!!!" )
 # print("******************************************")
 
 # print("\n")
@@ -941,7 +1028,7 @@ print("********************************************************")
 #                             )
 # print("\n")
 # print("******************************************")
-# print( "Saving data WBTS 3G ok!!!" )
+# print( "Saving data WBTS 3G done!!!" )
 # print("******************************************")
 
 # # saving 2G files
@@ -973,7 +1060,7 @@ print("********************************************************")
 #                             )
 # print("\n")
 # print("******************************************")
-# print( "Saving data GSM 2G ok!!!" )
+# print( "Saving data GSM 2G done!!!" )
 # print("******************************************")
 
 
@@ -1041,48 +1128,48 @@ print("********************************************************")
 # print("Exporting LTE FAULTS files ... ")
 # for key, value in dic_lte_faults.items():
 #     file_path = Path( f'{output_folder}/{key}_fallas_lte_Alertas Tempranas_4G.csv' )
-#     file_path.parent.mkdir( parents=True, exist_ok=True )
+#     file_path.parent.mkdir( parents=True, exist_done=True )
 #     #print(f'{key}: {value.shape}')
 #     value.to_csv(file_path)
     
-# print("Exporting LTE FAULTS files OK!")
+# print("Exporting LTE FAULTS files done!")
 
 # # Exporting GSM files
 # print("Exporting GSM files ... ")
 # for key, value in dic_gsm.items():
 #     file_path = Path( f'{output_folder}/{key}_Alertas Tempranas_2G.csv' )
-#     file_path.parent.mkdir( parents=True, exist_ok=True )
+#     file_path.parent.mkdir( parents=True, exist_done=True )
 #     #print(f'{key}: {value.shape}')
 #     value.to_csv(file_path)
 
-# print("Exporting GSM files OK!")
+# print("Exporting GSM files done!")
 
 # # Exporting LTE files
 # print("Exporting LTE files... ")
 # for key, value in dic_lte.items():
 #     file_path = Path( f'{output_folder}/{key}_lte_Alertas Tempranas_4G.csv' )
-#     file_path.parent.mkdir( parents=True, exist_ok=True )
+#     file_path.parent.mkdir( parents=True, exist_done=True )
 #     #print(f'{key}: {value.shape}')
 #     value.to_csv(file_path)
     
-# print("Exporting LTE files OK")
+# print("Exporting LTE files done")
 
 # # Exporting WBTS files
 # print("Exporting WBTS files... ")
 # for key, value in dic_wbts.items():
 #     file_path = Path( f'{output_folder}/{key}_wbts_Alertas Tempranas_3G.csv' )
-#     file_path.parent.mkdir( parents=True, exist_ok=True )
+#     file_path.parent.mkdir( parents=True, exist_done=True )
 #     #print(f'{key}: {value.shape}')
 #     value.to_csv(file_path)
 
-# print("Exporting WBTS files OK!")
+# print("Exporting WBTS files done!")
 
 # # Exporting WCDMA files
 # print("Exporting WCDMA files... ")
 # for key, value in dic_wcdma.items():
 #     file_path = Path( f'{output_folder}/{key}_wcdma_Alertas Tempranas_3G.csv' )
-#     file_path.parent.mkdir( parents=True, exist_ok=True )
+#     file_path.parent.mkdir( parents=True, exist_done=True )
 #     #print(f'{key}: {value.shape}')
 #     value.to_csv(file_path)
     
-# print("Exporting WCDMA files OK!")
+# print("Exporting WCDMA files done!")
