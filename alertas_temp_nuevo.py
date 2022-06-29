@@ -514,8 +514,11 @@ data = reader.read()
 
 # nota: incorporar la lógica para que detecte el caso en el
 # que se coloca una coma al final del último sitio
-sites_to_search = data.replace( '\n', '' ).split( "," )
+#sites_to_search = data.replace("\n", '').split(',')
+sites_to_search = data.split( "\n" )
 reader.close()
+
+#print( 'sitios a buscar:', sites_to_search )
 
 # sites by filter
 print("\n")
