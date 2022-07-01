@@ -650,7 +650,7 @@ print( " Creating files per site 2G ..." )
 print("******************************************")
 
 # templates path
-src_path_2g = r"plantilla\\Alertas Tempranas_2G.xlsx"
+src_path_2g = r"plantilla\Alertas Tempranas_2G.xlsx"
 
 # destination path
 dest_path = r"output/"
