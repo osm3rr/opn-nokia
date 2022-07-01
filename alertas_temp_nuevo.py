@@ -7,14 +7,23 @@ import shutil
 import os
 
 # base path of files location
-# windows route
-# path = C:\PythonScripts\
 
-# 
-path = "/home/opm/Documentos-opm/OPN_COLOMBIA/ANALYSIS/"
+## dev mode ###
+
+os_dev = "g"
+
+if os_dev == "l":
+    
+    path = "/home/opm/Documentos-opm/OPN_COLOMBIA/ANALYSIS/"
+    xlsx_files_list = glob.glob( path + "input" + "/*.xlsx" )
+
+elif os_dev == 'g':
+    
+    path = "C:\PythonScripts"
+    xlsx_files_list = glob.glob( path + "\input" + "\*.xlsx" )
 
 # List with the name of all excel files
-xlsx_files_list = glob.glob( path + "input" + "/*.xlsx" )
+
 
 # identifiers by technology
 faults_lte = "Fallas_TX_LTE"
@@ -510,7 +519,11 @@ print( "reading the filters file by site..." )
 print("******************************************")
 
 # file path for filter by unique sites
-filter_file = 'input/listado_de_sitios_at.txt'
+if os_dev == "l":
+    filter_file = 'input/listado_de_sitios_at.txt'
+
+elif os_dev == "g":
+    filter_file = 'input\listado_de_sitios_at.txt'
 
 # reading file
 reader = open( filter_file, 'r' )
@@ -653,7 +666,10 @@ print( " Creating files per site 2G ..." )
 print("******************************************")
 
 # templates path
-src_path_2g = r"plantilla/Alertas Tempranas_2G.xlsx"
+if os_dev == "l":
+    src_path_2g = r"plantilla/Alertas Tempranas_2G.xlsx"
+elif os_dev == "g":
+    src_path_2g = r"plantilla\Alertas Tempranas_2G.xlsx"
 
 # destination path
 dest_path = r"output/"
@@ -686,7 +702,10 @@ print( " Creating files per site 3G ..." )
 print("******************************************")
 
 # templates path
-src_path_3g = r"plantilla/Alertas Tempranas_3G.xlsx"
+if os_dev == "l":
+    src_path_3g = r"plantilla/Alertas Tempranas_3G.xlsx"
+elif os_dev == "g":
+    src_path_3g = r"plantilla\Alertas Tempranas_3G.xlsx"
 
 # destination path
 dest_path = r"output/"
@@ -719,7 +738,12 @@ print( " Creating files per site 4G..." )
 print("******************************************")
 
 # templates path
-src_path_4g = r"plantilla/Alertas Tempranas_4G.xlsx"
+if os_dev == "l":
+    src_path_4g = r"plantilla/Alertas Tempranas_4G.xlsx"
+elif os_dev == "g":
+    src_path_4g = r"plantilla\Alertas Tempranas_4G.xlsx"
+
+
 
 # destination path
 dest_path = r"output/"
