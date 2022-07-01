@@ -7,10 +7,11 @@ import shutil
 import os
 
 # base path of files location
-path = "/home/opm/Documentos-opm/OPN_COLOMBIA/ANALISYS/input"
+# path = "/home/opm/Documentos-opm/OPN_COLOMBIA/ANALISYS/input"
+path = "C:\PythonScripts"
 
 # List with the name of all excel files
-xlsx_files_list = glob.glob( path + "/*.xlsx" )
+xlsx_files_list = glob.glob( path + "\input" + "\*.xlsx" )
 
 # identifiers by technology
 faults_lte = "Fallas_TX_LTE"
@@ -506,7 +507,7 @@ print( "reading the filters file by site..." )
 print("******************************************")
 
 # file path for filter by unique sites
-filter_file = 'input/listado_de_sitios_at.txt'
+filter_file = 'input\listado_de_sitios_at.txt'
 
 # reading file
 reader = open( filter_file, 'r' )
@@ -649,7 +650,7 @@ print( " Creating files per site 2G ..." )
 print("******************************************")
 
 # templates path
-src_path_2g = r"plantilla/Alertas Tempranas_2G.xlsx"
+src_path_2g = r"plantilla\\Alertas Tempranas_2G.xlsx"
 
 # destination path
 dest_path = r"output/"
@@ -682,7 +683,7 @@ print( " Creating files per site 3G ..." )
 print("******************************************")
 
 # templates path
-src_path_3g = r"plantilla/Alertas Tempranas_3G.xlsx"
+src_path_3g = r"plantilla\Alertas Tempranas_3G.xlsx"
 
 # destination path
 dest_path = r"output/"
@@ -715,7 +716,7 @@ print( " Creating files per site 4G..." )
 print("******************************************")
 
 # templates path
-src_path_4g = r"plantilla/Alertas Tempranas_4G.xlsx"
+src_path_4g = r"plantilla\Alertas Tempranas_4G.xlsx"
 
 # destination path
 dest_path = r"output/"
