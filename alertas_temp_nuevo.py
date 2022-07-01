@@ -7,10 +7,14 @@ import shutil
 import os
 
 # base path of files location
-path = "/home/opm/Documentos-opm/OPN_COLOMBIA/ANALISYS/input"
+# windows route
+# path = C:\PythonScripts\
+
+# 
+path = "/home/opm/Documentos-opm/OPN_COLOMBIA/ANALYSIS/"
 
 # List with the name of all excel files
-xlsx_files_list = glob.glob( path + "/*.xlsx" )
+xlsx_files_list = glob.glob( path + "input" + "/*.xlsx" )
 
 # identifiers by technology
 faults_lte = "Fallas_TX_LTE"
