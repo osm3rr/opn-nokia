@@ -9,20 +9,23 @@ import os
 # base path of files location
 
 ## dev mode ###
-
-os_dev = "g"
+# "w" for windows
+# "l" for linux
+os_dev = "l"
 
 if os_dev == "l":
     
     path = "/home/opm/Documentos-opm/OPN_COLOMBIA/ANALYSIS/"
+    # List with the name of all excel files
     xlsx_files_list = glob.glob( path + "input" + "/*.xlsx" )
 
-elif os_dev == 'g':
+elif os_dev == 'w':
     
     path = "C:\PythonScripts"
+    # List with the name of all excel files
     xlsx_files_list = glob.glob( path + "\input" + "\*.xlsx" )
 
-# List with the name of all excel files
+
 
 
 # identifiers by technology
@@ -522,7 +525,7 @@ print("******************************************")
 if os_dev == "l":
     filter_file = 'input/listado_de_sitios_at.txt'
 
-elif os_dev == "g":
+elif os_dev == "w":
     filter_file = 'input\listado_de_sitios_at.txt'
 
 # reading file
@@ -636,8 +639,7 @@ print("******************************************")
 print( "site search by technology done!!!" )
 print("******************************************")
 
-## Copiar plantilla por tecnología 
-# y guardar tantas veces, como sitios encontrados
+# Copy template by technology and save as many times as sites found
 
 # ***** Save the files in specifics templates by technology************
 print("\n")
@@ -668,7 +670,7 @@ print("******************************************")
 # templates path
 if os_dev == "l":
     src_path_2g = r"plantilla/Alertas Tempranas_2G.xlsx"
-elif os_dev == "g":
+elif os_dev == "w":
     src_path_2g = r"plantilla\Alertas Tempranas_2G.xlsx"
 
 # destination path
@@ -704,7 +706,7 @@ print("******************************************")
 # templates path
 if os_dev == "l":
     src_path_3g = r"plantilla/Alertas Tempranas_3G.xlsx"
-elif os_dev == "g":
+elif os_dev == "w":
     src_path_3g = r"plantilla\Alertas Tempranas_3G.xlsx"
 
 # destination path
@@ -740,7 +742,7 @@ print("******************************************")
 # templates path
 if os_dev == "l":
     src_path_4g = r"plantilla/Alertas Tempranas_4G.xlsx"
-elif os_dev == "g":
+elif os_dev == "w":
     src_path_4g = r"plantilla\Alertas Tempranas_4G.xlsx"
 
 
@@ -767,6 +769,33 @@ for file_name in os.listdir(dest_path):
 print("\n")
 print("********************************************************")
 print( "files per site 4G created successfully!!! ..." )
+print("********************************************************")
+
+#############################################################
+#**** create technology-consolidated files in input folder***
+#############################################################
+print("\n")
+print("********************************************************")
+print( "create technology-consolidated files in input folder..." )
+print("********************************************************")
+
+# destination path input folder
+dest_path_input = r"input/"
+
+# templates path
+src_path_plantilla = r"plantilla/"
+for consolidated_file in os.listdir(src_path_plantilla):
+    src_path = src_path_plantilla + consolidated_file
+    
+    if consolidated_file in os.listdir( dest_path_input ):
+        os.remove( dest_path_input + consolidated_file )
+        shutil.copy( src_path, dest_path_input )    
+    
+    else:
+        
+        shutil.copy( src_path, dest_path_input )
+print("********************************************************")
+print( "create technology-consolidated files in input folder done!!" )
 print("********************************************************")
 
 #############################################################
