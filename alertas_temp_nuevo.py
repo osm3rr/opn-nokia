@@ -5,13 +5,16 @@ import glob
 from pathlib import Path
 import shutil
 import os
+import warnings
+
+warnings.filterwarnings('ignore', category=UserWarning, module='openpyxl')
 
 # base path of files location
 
 ## dev mode ###
 # "w" for windows
 # "l" for linux
-os_dev = "l"
+os_dev = "w"
 
 if os_dev == "l":
     
@@ -1089,6 +1092,60 @@ for file_name in os.listdir(dest_path):
 print("********************************************************")
 print("2G data injection, done!")
 print("********************************************************")
+
+#############################################################
+#**** data injection in consolidated files*****
+#############################################################
+
+print("\n")
+print("********************************************************")
+print("2G data injection consolidated file...")
+print("********************************************************")
+########## Data injection GSM consolidated file #########
+
+#/////////////// WORK IN PROGRESS/////////////////
+
+# loop through existing files
+for file_name in os.listdir(dest_path_input):
+    if "2G" in file_name:
+        # file filtered path
+        path_file_2g_cf = dest_path_input + file_name
+        # 
+        for site in dic_gsm:
+            #if site in path_file_2g_cf:
+                # data injection
+            with pd.ExcelWriter( 
+                                path_file_2g_cf,
+                                mode='a', 
+                                engine='openpyxl', 
+                                if_sheet_exists='overlay' ) as writer:
+                
+                    
+                # reading the dimensions of the existing file
+                reader_gsm = pd.read_excel( path_file_2g_cf, sheet_name='Data' )
+                start_row_gsm = len( reader_gsm ) + 1
+                    
+                # fill the specific df in an existing sheet
+                dic_gsm[ site ].to_excel( 
+                                            writer, 
+                                            sheet_name = 'Data',
+                                            index = False,
+                                            header = None,
+                                            startrow = start_row_gsm
+                                            )
+                      
+            #else:
+            #    pass
+                
+    else:
+        pass
+    
+print("********************************************************")
+print("2G data injection consolidated file: done!!!")
+print("********************************************************")
+
+
+
 
 # Saving 4G files
 # path_4g = 'output/Alertas Tempranas_4G.xlsx'
