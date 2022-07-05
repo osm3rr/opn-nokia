@@ -14,7 +14,7 @@ warnings.filterwarnings('ignore', category=UserWarning, module='openpyxl')
 ## dev mode ###
 # "w" for windows
 # "l" for linux
-os_dev = "w"
+os_dev = "l"
 
 if os_dev == "l":
     
@@ -1103,8 +1103,6 @@ print("2G data injection consolidated file...")
 print("********************************************************")
 ########## Data injection GSM consolidated file #########
 
-#/////////////// WORK IN PROGRESS/////////////////
-
 # loop through existing files
 for file_name in os.listdir(dest_path_input):
     if "2G" in file_name:
@@ -1144,6 +1142,85 @@ print("********************************************************")
 print("2G data injection consolidated file: done!!!")
 print("********************************************************")
 
+#/////////////// WORK IN PROGRESS/////////////////
+
+print("\n")
+print("********************************************************")
+print("3G data injection consolidated file...")
+print("********************************************************")
+########## Data injection WCDMA #########
+# loop through existing files
+for file_name in os.listdir(dest_path_input):
+    if "3G" in file_name:
+        # file filtered path
+        path_file_3g_cf = dest_path_input + file_name
+        # 
+        for site in dic_wcdma:
+        #if site in path_file_3g:
+            # data injection
+            with pd.ExcelWriter( 
+                                path_file_3g_cf,
+                                mode='a', 
+                                engine='openpyxl', 
+                                if_sheet_exists='overlay' ) as writer:
+                    
+                # reading the dimensions of the existing file
+                reader_wcdma = pd.read_excel( path_file_3g_cf, sheet_name='Data' )
+                start_row_wcdma = len( reader_wcdma ) + 1
+                    
+                # fill the specific df in an existing sheet
+                dic_wcdma[ site ].to_excel( 
+                                            writer, 
+                                            sheet_name = 'Data',
+                                            index = False,
+                                            header = None,
+                                            startrow = start_row_wcdma
+                                            )
+                      
+            # else:
+            #     pass
+                
+    else:
+        pass
+
+########## Data injection WBTS #########
+# loop through existing files
+for file_name in os.listdir(dest_path_input):
+    if "3G" in file_name:
+        # file filtered path
+        path_file_3g_cf = dest_path_input + file_name
+        # 
+        for site in dic_wbts:
+            #if site in path_file_3g:
+            # data injection
+            with pd.ExcelWriter( 
+                                path_file_3g_cf,
+                                mode='a', 
+                                engine='openpyxl', 
+                                if_sheet_exists='overlay' ) as writer:
+                    
+                # reading the dimensions of the existing file
+                reader_wbts = pd.read_excel( path_file_3g_cf, sheet_name='Data2' )
+                start_row_wbts = len( reader_wbts ) + 1
+                    
+                # fill the specific df in an existing sheet
+                dic_wbts[ site ].to_excel( 
+                                            writer, 
+                                            sheet_name = 'Data2', 
+                                            index = False,
+                                            header = None,
+                                            startrow = start_row_wbts
+                                            )
+                      
+            # else:
+            #     pass
+                
+    else:
+        pass
+
+print("********************************************************")
+print("3G data injection consolidated file: done!!!")
+print("********************************************************")
 
 
 
