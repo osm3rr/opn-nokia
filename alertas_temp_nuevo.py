@@ -9,15 +9,13 @@ import warnings
 
 warnings.filterwarnings('ignore', category=UserWarning, module='openpyxl')
 
-# base path of files location
-
 ## dev mode ###
 # "w" for windows
 # "l" for linux
 os_dev = "l"
 
 if os_dev == "l":
-    
+    # base path of files location    
     path = "/home/opm/Documentos-opm/OPN_COLOMBIA/ANALYSIS/"
     # List with the name of all excel files
     xlsx_files_list = glob.glob( path + "input" + "/*.xlsx" )
@@ -27,9 +25,6 @@ elif os_dev == 'w':
     path = "C:\PythonScripts"
     # List with the name of all excel files
     xlsx_files_list = glob.glob( path + "\input" + "\*.xlsx" )
-
-
-
 
 # identifiers by technology
 faults_lte = "Fallas_TX_LTE"
@@ -84,9 +79,7 @@ for xlsx_file in range( len( xlsx_files_list ) ):
             df_faults_lte_1 = df_faults_lte_total.copy()
             # validation print    
             print( f'Shape LTE FAULTS: {df_faults_lte_total.shape}, file: {faults_lte_count}' )
-            
-        
-        
+                   
     ## search GSM monitoring***
     elif gsm_monitoring in xlsx_files_list[ xlsx_file ]:
         
@@ -101,7 +94,6 @@ for xlsx_file in range( len( xlsx_files_list ) ):
             # validation print
             print( f'Shape GSM: {df_gsm_1.shape}, file: {gsm_monitoring_count}' )
             
-            
         else:
             df_gsm_2 = pd.read_excel( io=xlsx_files_list[ xlsx_file ] )
             
@@ -112,8 +104,6 @@ for xlsx_file in range( len( xlsx_files_list ) ):
             df_gsm_1 = df_gsm_total.copy()
             # validation print    
             print( f'Shape GSM: {df_gsm_total.shape}, file: {gsm_monitoring_count}' )
-            
-                
             
     ## search LTE monitoring 
     elif lte_monitoring in xlsx_files_list[ xlsx_file ]:
@@ -129,7 +119,6 @@ for xlsx_file in range( len( xlsx_files_list ) ):
             # validation print
             print( f'Shape LTE: {df_lte_1.shape}, file: {lte_monitoring_count}' )
             
-            
         else:
             df_lte_2 = pd.read_excel( io=xlsx_files_list[ xlsx_file ] )
             
@@ -142,8 +131,6 @@ for xlsx_file in range( len( xlsx_files_list ) ):
             df_lte_1 = df_lte_total.copy()
             # validation print    
             print( f'Shape LTE: {df_lte_total.shape}, file: {lte_monitoring_count}' )
-            
-        
                 
     ## search WBTS monitoring
     elif wbts_monitoring in xlsx_files_list[ xlsx_file ]:
@@ -173,8 +160,6 @@ for xlsx_file in range( len( xlsx_files_list ) ):
             # validation print    
             print( f'Shape WBTS: {df_wbts_total.shape}, file: {wbts_monitoring_count}' )
             
-
-        
     ## search WCDA monitoring
     elif wcdma_monitoring in xlsx_files_list[ xlsx_file ]:
         
@@ -203,8 +188,6 @@ for xlsx_file in range( len( xlsx_files_list ) ):
             # validation print    
             print( f'Shape WCDMA: {df_wcdma_total.shape}, file: {wcdma_monitoring_count}' )
 
-
-    
     ## No valid files
     else:
         #print( "No valid files" )
@@ -393,59 +376,12 @@ print( "***************************************************" )
 print( "2G parameter correspondence (GSM): done!!! " )
 print("****************************************************")
 
-#************************************************
-# normalize the name of the sites per file
-#************************************************
-# def norm_name(site:str) -> str:
-#     """normaliza los nombres de los sitios, 
-#     colocando los nombres en minúscula y sustituyendo los caracteres
-#     '.', ':', ' ' y '-' por '_'
-
-#     Args:
-#         site (str): nombre del sitio original
-
-#     Returns:
-#         site (str): nombre del sitio normalizado    
-#     """
-    
-#     site = site.lower()
-#     signs = [' ', '.', ':', '-']
-#     for c in range( len( site ) ):
-#         if site[c] in signs:
-#             site = site.replace(site[c] , '_')
-        
-#     return site
-
-# # Normalization of site names
-# print("\n")
-# print("******************************************")
-# print( "Normalization of site names..." )
-# print("******************************************")
-
 # Attributes to filter by technology
 faults_lte_filter = 'LNBTS name'
 gsm_filter = 'BCF name'
 lte_filter = 'LNBTS name'
 wbts_filter = 'WBTS name'
 wcdma_filter = 'WBTS name'
-
-# # Normalization of site names 
-# df_faults_lte_total[ faults_lte_filter ] = df_faults_lte_total[
-#     faults_lte_filter ].apply( norm_name );
-
-# df_gsm_total[ gsm_filter ] = df_gsm_total[ 
-#                                             gsm_filter ].apply( norm_name );
-
-# df_lte_total[ lte_filter ] = df_lte_total[ 
-#                                             lte_filter ].apply( norm_name );
-
-# df_wbts_total[ wbts_filter ] = df_wbts_total[
-#     wbts_filter ].apply( norm_name );
-
-# df_wcdma_total[ wcdma_filter ] = df_wcdma_total[
-#     wcdma_filter ].apply( norm_name );
-
-# print( "Normalization of site names done!" )
 
 #************************************************
 # Remove duplicate values
@@ -535,9 +471,9 @@ elif os_dev == "w":
 reader = open( filter_file, 'r' )
 data = reader.read()
 
-# nota: incorporar la lógica para que detecte el caso en el
-# que se coloca una coma al final del último sitio
+
 #sites_to_search = data.replace("\n", '').split(',')
+
 sites_to_search = data.split( "\n" )
 reader.close()
 
@@ -1299,268 +1235,3 @@ for file_name in os.listdir(dest_path_input):
 print("********************************************************")
 print("4G data injection consolidated file: Done!!!")
 print("********************************************************")
-
-
-# Saving 4G files
-# path_4g = 'output/Alertas Tempranas_4G.xlsx'
-
-# with pd.ExcelWriter( 
-#                     path_4g,
-#                     mode='a', 
-#                     engine='openpyxl', 
-#                     if_sheet_exists='overlay' ) as writer:
-    
-#     # reading the dimensions of the existing file
-#     reader_faults_lte = pd.read_excel( path_4g, sheet_name='Data2' )
-#     start_row_faults_lte = len( reader_faults_lte ) + 1
-    
-#     # fill the specific df in an existing sheet
-#     df_faults_lte_unique.to_excel( 
-#                                 writer, 
-#                                 sheet_name = 'Data2', 
-#                                 index = False,
-#                                 header = None,
-#                                 startrow = start_row_faults_lte
-#                                 )
-# print("\n")
-# print("******************************************")
-# print( "Saving data LTE FAULTS 4G done!!!" )
-# print("******************************************")
-
-# # savig LTE FAULTS
-# print("\n")
-# print("******************************************")
-# print( "Saving data LTE 4G (Data)..." )
-# print("******************************************")
-
-# # saving 4G files
-# path_4g = 'output/Alertas Tempranas_4G.xlsx'
-
-# with pd.ExcelWriter( 
-#                     path_4g,
-#                     mode='a', 
-#                     engine='openpyxl', 
-#                     if_sheet_exists='overlay' ) as writer:
-    
-#     # reading the dimensions of the existing file
-#     reader_lte = pd.read_excel( path_4g, sheet_name='Data' )
-#     start_row_lte = len( reader_lte ) + 1
-    
-#     # fill the specific df in an existing sheet
-#     df_lte_unique.to_excel( 
-#                             writer, 
-#                             sheet_name='Data', 
-#                             index = False,
-#                             header = None,
-#                             startrow = start_row_lte
-#                             )
-# print("\n")
-# print("******************************************")
-# print( "Saving data LTE 4G done!!!" )
-# print("******************************************")
-
-# # savig 3G files
-# print("\n")
-# print("******************************************")
-# print( "Saving data WCDMA 3G (Data)..." )
-# print("******************************************")
-
-# # saving 3G files
-# path_3g = 'output/Alertas Tempranas_3G.xlsx'
-
-# with pd.ExcelWriter( 
-#                     path_3g,
-#                     mode='a', 
-#                     engine='openpyxl', 
-#                     if_sheet_exists='overlay' ) as writer:
-    
-#     # reading the dimensions of the existing file
-#     reader_wcdma = pd.read_excel( path_3g, sheet_name='Data' )
-#     start_row_wcdma = len( reader_wcdma ) + 1
-    
-#     # fill with the specific df in an existing sheet
-#     df_wcdma_unique.to_excel( 
-#                             writer, 
-#                             sheet_name='Data', 
-#                             index = False,
-#                             header = None,
-#                             startrow = start_row_wcdma
-#                             )
-# print("\n")
-# print("******************************************")
-# print( "Saving data WCDMA 3G done!!!" )
-# print("******************************************")
-
-# print("\n")
-# print("******************************************")
-# print( "Saving data WBTS 3G (Data2)..." )
-# print("******************************************")
-
-# # saving 3G files
-# path_3g = 'output/Alertas Tempranas_3G.xlsx'
-
-# with pd.ExcelWriter( 
-#                     path_3g,
-#                     mode='a', 
-#                     engine='openpyxl', 
-#                     if_sheet_exists='overlay' ) as writer:
-    
-#     # reading the dimensions of the existing file
-#     reader_wbts = pd.read_excel( path_3g, sheet_name='Data2' )
-#     start_row_wbts = len( reader_wbts ) + 1
-    
-#     # fill with the specific df in an existing sheet
-#     df_wbts_unique.to_excel( 
-#                             writer, 
-#                             sheet_name='Data2', 
-#                             index = False,
-#                             header = None,
-#                             startrow = start_row_wbts
-#                             )
-# print("\n")
-# print("******************************************")
-# print( "Saving data WBTS 3G done!!!" )
-# print("******************************************")
-
-# # saving 2G files
-# print("\n")
-# print("******************************************")
-# print( "Saving data GSM 2G (Data)..." )
-# print("******************************************")
-
-# # saving 2G files
-# path_2g = 'output/Alertas Tempranas_2G.xlsx'
-
-# with pd.ExcelWriter( 
-#                     path_2g,
-#                     mode='a', 
-#                     engine='openpyxl', 
-#                     if_sheet_exists='overlay' ) as writer:
-    
-#     # reading the dimensions of the existing file
-#     reader_gsm = pd.read_excel( path_2g, sheet_name='Data' )
-#     start_row_gsm = len( reader_gsm ) + 1
-
-#     # fill with the specific df in an existing sheet
-#     df_gsm_unique.to_excel( 
-#                             writer, 
-#                             sheet_name='Data', 
-#                             index = False,
-#                             header = None,
-#                             startrow = start_row_gsm
-#                             )
-# print("\n")
-# print("******************************************")
-# print( "Saving data GSM 2G done!!!" )
-# print("******************************************")
-
-
-#############################################################
-#**** filter the data according to the indicated sites*****
-#############################################################
-
-# Saves the filtered data in a dictionary. 
-# By key of the dictionary is the site and by value the data
-
-# LTE FAILURES Dictionary 
-# print("LTE FAULTS filter :")
-# dic_lte_faults = {}
-# for item in fault_lte_sites:
-#     dic_lte_faults[item] = df_faults_lte_unique[ 
-#                       df_faults_lte_unique[ faults_lte_filter ] ==  item 
-#                                   ]
-#     print( f'{item}: {dic_lte_faults[item].shape}' )
-
-# # GSM Dictionary 
-# print("GSM filter:")
-# dic_gsm = {}
-# for item in gsm_sites:
-#     dic_gsm[item] = df_gsm_unique[ 
-#                       df_gsm_unique[ gsm_filter ] ==  item 
-#                                 ]
-#     print( f'{item}: {dic_gsm[item].shape}' )
-    
-# # LTE Dictionary 
-# print("LTE filter:")
-# dic_lte = {}
-# for item in lte_sites:
-#     dic_lte[item] = df_lte_unique[ 
-#                       df_lte_unique[ lte_filter ] ==  item 
-#                                 ]
-#     print( f'{item}: {dic_lte[item].shape}' )
-    
-# # WBTS Dictionary 
-# print("WBTS filter:")
-# dic_wbts = {}
-# for item in wbts_sites:
-#     dic_wbts[item] = df_wbts_unique[ 
-#                       df_wbts_unique[ wbts_filter ] ==  item 
-#                                 ]
-#     print( f'{item}: {dic_wbts[item].shape}' )
-    
-# # WCDMA Dictionary
-# print("WCDMA filter:")
-# dic_wcdma = {}
-# for item in wcdma_sites:
-#     dic_wcdma[item] = df_wcdma_unique[ 
-#                       df_wcdma_unique[ wcdma_filter ] ==  item 
-#                                 ]
-#     print( f'{item}: {dic_wcdma[item].shape}' )
-    
-# # Exporting files filtered by site
-# print("\n")
-# print("******************************************")
-# print( "Exporting files filtered by site..." )
-# print("******************************************")
-
-# output_folder = 'output'
-
-# # Exporting LTE FAULTS files
-# print("Exporting LTE FAULTS files ... ")
-# for key, value in dic_lte_faults.items():
-#     file_path = Path( f'{output_folder}/{key}_fallas_lte_Alertas Tempranas_4G.csv' )
-#     file_path.parent.mkdir( parents=True, exist_done=True )
-#     #print(f'{key}: {value.shape}')
-#     value.to_csv(file_path)
-    
-# print("Exporting LTE FAULTS files done!")
-
-# # Exporting GSM files
-# print("Exporting GSM files ... ")
-# for key, value in dic_gsm.items():
-#     file_path = Path( f'{output_folder}/{key}_Alertas Tempranas_2G.csv' )
-#     file_path.parent.mkdir( parents=True, exist_done=True )
-#     #print(f'{key}: {value.shape}')
-#     value.to_csv(file_path)
-
-# print("Exporting GSM files done!")
-
-# # Exporting LTE files
-# print("Exporting LTE files... ")
-# for key, value in dic_lte.items():
-#     file_path = Path( f'{output_folder}/{key}_lte_Alertas Tempranas_4G.csv' )
-#     file_path.parent.mkdir( parents=True, exist_done=True )
-#     #print(f'{key}: {value.shape}')
-#     value.to_csv(file_path)
-    
-# print("Exporting LTE files done")
-
-# # Exporting WBTS files
-# print("Exporting WBTS files... ")
-# for key, value in dic_wbts.items():
-#     file_path = Path( f'{output_folder}/{key}_wbts_Alertas Tempranas_3G.csv' )
-#     file_path.parent.mkdir( parents=True, exist_done=True )
-#     #print(f'{key}: {value.shape}')
-#     value.to_csv(file_path)
-
-# print("Exporting WBTS files done!")
-
-# # Exporting WCDMA files
-# print("Exporting WCDMA files... ")
-# for key, value in dic_wcdma.items():
-#     file_path = Path( f'{output_folder}/{key}_wcdma_Alertas Tempranas_3G.csv' )
-#     file_path.parent.mkdir( parents=True, exist_done=True )
-#     #print(f'{key}: {value.shape}')
-#     value.to_csv(file_path)
-    
-# print("Exporting WCDMA files done!")
