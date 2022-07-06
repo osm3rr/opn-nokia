@@ -14,7 +14,7 @@ warnings.filterwarnings('ignore', category=UserWarning, module='openpyxl')
 ## dev mode ###
 # "w" for windows
 # "l" for linux
-os_dev = "l"
+os_dev = "w"
 
 if os_dev == "l":
     
