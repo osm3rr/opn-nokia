@@ -1142,8 +1142,6 @@ print("********************************************************")
 print("2G data injection consolidated file: done!!!")
 print("********************************************************")
 
-#/////////////// WORK IN PROGRESS/////////////////
-
 print("\n")
 print("********************************************************")
 print("3G data injection consolidated file...")
@@ -1222,6 +1220,85 @@ print("********************************************************")
 print("3G data injection consolidated file: done!!!")
 print("********************************************************")
 
+#/////////////// WORK IN PROGRESS/////////////////
+
+print("\n")
+print("********************************************************")
+print("4G data injection consolidated file...")
+print("********************************************************")
+
+########## Data injection FAULTS LTE #########
+# loop through existing files
+for file_name in os.listdir(dest_path_input):
+    if "4G" in file_name:
+        # file filtered path
+        path_file_4g_cf = dest_path_input + file_name
+        # 
+        for site in dic_lte_faults:
+            #if site in path_file_4g:
+                # data injection
+            with pd.ExcelWriter( 
+                                path_file_4g_cf,
+                                mode='a', 
+                                engine='openpyxl', 
+                                if_sheet_exists='overlay' ) as writer:
+                                    
+                # reading the dimensions of the existing file
+                reader_faults_lte = pd.read_excel( path_file_4g_cf, sheet_name='Data2' )
+                start_row_faults_lte = len( reader_faults_lte ) + 1
+                    
+                # fill the specific df in an existing sheet
+                dic_lte_faults[ site ].to_excel( 
+                                            writer, 
+                                            sheet_name = 'Data2', 
+                                            index = False,
+                                            header = None,
+                                            startrow = start_row_faults_lte
+                                            )      
+            # else:
+            #     pass
+                
+    else:
+        pass
+    
+########## Data injection LTE #########
+# loop through existing files
+for file_name in os.listdir(dest_path_input):
+    if "4G" in file_name:
+        # file filtered path
+        path_file_4g_cf = dest_path_input + file_name
+        # 
+        for site in dic_lte:
+            #if site in path_file_4g:
+                # data injection
+            with pd.ExcelWriter( 
+                                path_file_4g_cf,
+                                mode='a', 
+                                engine='openpyxl', 
+                                if_sheet_exists='overlay' ) as writer:
+                                    
+                # reading the dimensions of the existing file
+                reader_lte = pd.read_excel( path_file_4g_cf, sheet_name='Data' )
+                start_row_lte = len( reader_lte ) + 1
+                    
+                # fill the specific df in an existing sheet
+                dic_lte[ site ].to_excel( 
+                                        writer, 
+                                        sheet_name = 'Data', 
+                                        index = False,
+                                        header = None,
+                                        startrow = start_row_lte
+                                        )
+                      
+            # else:
+            #     pass
+                
+    else:
+        pass
+
+print("********************************************************")
+print("4G data injection consolidated file: Done!!!")
+print("********************************************************")
 
 
 # Saving 4G files
