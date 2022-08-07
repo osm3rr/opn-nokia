@@ -1156,8 +1156,6 @@ print("********************************************************")
 print("3G data injection consolidated file: done!!!")
 print("********************************************************")
 
-#/////////////// WORK IN PROGRESS/////////////////
-
 print("\n")
 print("********************************************************")
 print("4G data injection consolidated file...")
@@ -1235,3 +1233,5 @@ for file_name in os.listdir(dest_path_input):
 print("********************************************************")
 print("4G data injection consolidated file: Done!!!")
 print("********************************************************")
+
+#/////////////// WORK IN PROGRESS/////////////////
